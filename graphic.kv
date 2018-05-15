@@ -1,0 +1,257 @@
+#:import ClickArea gui_elements
+#:import ScrollView kivy.uix.scrollview
+#:import Window kivy.core.window.Window
+
+<Widget>:
+    font_name: "fonts/font.ttf"
+
+<Player>:
+    items_area: items_area
+    weapon_img: weapon
+
+    size_hint: .3, .3
+
+    pos: 50, 350
+
+    FloatLayout:
+        id: items_area
+        pos: root.pos
+        size_hint: root.size_hint
+
+        Image:
+            id: weapon
+            pos_hint: {'x': 0.7, 'y': .9}
+            size_hint_y: .7
+
+            canvas.before:
+                PushMatrix
+                Rotate:
+                    angle: root.angle
+                    axis: 0, 0, 1
+                    origin: self.pos
+
+            canvas.after:
+                PopMatrix
+
+<Monster>:
+    pos_hint: {'center_x': .8, 'center_y': .5}
+    allow_stretch: True
+    size_hint_y: .15
+
+<Upgrade>:
+    name_label: name_label
+    img: img
+    info_label: info_label
+    size_hint_y: None
+    height: Window.height * 0.21
+    markup: True
+    font_size: 20
+    background_normal: "img/upgrade_background.png"
+    background_down: "img/upgrade_background.png"
+
+    GridLayout:
+        pos: root.pos
+        size: root.size
+        cols: 1
+        spacing: 15
+        size_hint_y: None
+
+        Label:
+            id: name_label
+            font_size: 25
+
+        GridLayout:
+            cols: 2
+            spacing: 1
+
+            Image:
+                id: img
+
+            MoneyLabel:
+                id: info_label
+                halign: "center"
+                font_size: 35
+
+<MenuButton@Button>:
+    size_hint: (.2, None)
+    height: self.width
+
+<ExitButton@Button>:
+    border: (0,0,0,0)
+    pos_hint: {'top': 1, 'right': 1}
+    background_normal: "img/icons/x_ico.png"
+    background_down: "img/icons/x_ico_down.png"
+    size_hint: (None, None)
+    size: (80, 80)
+
+    on_press: self.parent.parent.close_window()
+
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: 45
+            origin: self.center
+
+    canvas.after:
+        PopMatrix
+
+<PopupWindow>:
+    size_hint: (.8, .9)
+    pos_hint: {'center_x': .5, 'center_y': .5}
+
+    Image:
+        source: "img/window_background.png"
+        allow_stretch: True
+        size: self.size
+        pos_hint: self.parent.pos_hint
+
+    ExitButton:
+        id: exit_btn
+
+<ShopContent>:
+    scrolling_area: scrolling_area
+
+    pos_hint: {'center_x': .5}
+    size_hint: (.85, .6)
+
+    GridLayout:
+        id: scrolling_area
+        cols: 1
+        spacing: 15
+        size_hint_y: None
+        height: self.minimum_height
+
+<ShopWindow>:
+    header: header
+    window_scheme: scheme
+
+    BoxLayout:
+        id: scheme
+        size_hint: (.9, .9)
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        orientation: 'vertical'
+
+        Label:
+            id: header
+            font_size: 60
+            pos_hint: {'center_x': .5}
+            size_hint: (1, .1)
+
+<ArenaWindow>:
+    header: header
+    arena_img: arena_img
+    buy_btn: buy
+    previous_btn: previous
+    next_btn: next
+    window_scheme: scheme
+    info_label: info_label
+
+    FloatLayout:
+        id: scheme
+        size_hint: (.9, .9)
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        orientation: 'vertical'
+
+        Label:
+            id: header
+            font_size: 45
+            pos_hint: {'center_x': .5, 'center_y': .95}
+            size_hint: (1, .1)
+
+        Image:
+            id: arena_img
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            size_hint_y: .4
+
+        BoxLayout:
+            size_hint: (None, .15)
+            pos_hint: {'center_x': .5, 'center_y': .3}
+            orientation: 'vertical'
+
+            Label:
+                id: info_label
+                font_size: 35
+
+
+        GridLayout:
+            cols: 3
+            size_hint: (.9, None)
+            pos_hint: {'center_x': .5, 'center_y': .1}
+            spacing: 10
+
+            Button:
+                id: previous
+                font_size: 20
+                text: "Previous"
+                background_down: "img/upgrade_background.png"
+                background_normal: "img/upgrade_background.png"
+
+                on_press: root.change_arena(-1)
+
+            Button:
+                id: buy
+                background_down: "img/upgrade_background.png"
+                background_normal: "img/upgrade_background.png"
+
+                on_press: root.buy()
+
+            Button:
+                id: next
+                font_size: 20
+                text: "Next"
+                background_down: "img/upgrade_background.png"
+                background_normal: "img/upgrade_background.png"
+
+                on_press: root.change_arena(1)
+
+<GameManager>:
+    menu: menu
+    background: background
+
+    FloatLayout:
+        Image:
+            id: background
+            allow_stretch: True
+            size_hint: (1, 1)
+
+        MoneyLabel:
+            id: money_counter
+            pos_hint: {'y': .45, 'center_x': .5}
+            font_size: 60
+            text: self.set_text(root.money)
+
+        GridLayout:
+            id: menu
+            cols: 4
+            size_hint: (1, None)
+            pos_hint: {'center_x': 0.5}
+            spacing: self.width * 2/40
+
+            MenuButton:
+                background_down: "img/icons/sword_fatality.png"
+                background_normal: "img/icons/sword_fatality.png"
+                on_press: root.open_window(0)
+
+            MenuButton:
+                background_down: "img/upgrades/iron helmet.png"
+                background_normal: "img/upgrades/iron helmet.png"
+                on_press: root.open_window(1)
+
+            MenuButton:
+                background_down: "img/icons/health_mixture_big.png"
+                background_normal: "img/icons/health_mixture_big.png"
+                on_press: root.open_window(2)
+
+            MenuButton:
+                background_down: "img/icons/golden_chest_close.png"
+                background_normal: "img/icons/golden_chest_close.png"
+                on_press: root.open_window(3)
+
+        MenuButton:
+            pos_hint: {'top': 1, 'x': 0}
+            background_down: "img/icons/arena_ico.png"
+            background_normal: "img/icons/arena_ico.png"
+
+            on_press: root.open_window(4)
+
+
