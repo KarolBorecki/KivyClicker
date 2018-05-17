@@ -44,7 +44,10 @@ class GameManager(FloatLayout):
             print("BOSS FIGHT")
 
         self.current_monster = monster
+
+        self.remove_widget(self.player)
         self.add_widget(monster)
+        self.add_widget(self.player)
 
     def on_kill(self):
         self.money += self.current_arena.kill_bonus + self.current_monster.kill_bonus

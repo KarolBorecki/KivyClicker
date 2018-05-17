@@ -15,19 +15,14 @@ class Player(Image):
         self.weapon_img.source = self.weapon.load_img_src()
 
     def attack(self, monster):
-        self.parent.add_widget(DisappearingImage("img/effects/dust_1.gif", {'center_x': .65, 'center_y': .5}, (.6, .6)))
-        anim = Animation(x=self.parent.current_monster.x+50, duration=0.05) + Animation(angle=0, duration=0.05) + \
-               Animation(angle=90, duration=0.1)
+        self.parent.add_widget(DisappearingImage("img/effects/dust.gif", {'center_x': .5, 'center_y': .5}, (.6, .6)))
+        anim = Animation(angle=0, duration=0.05) + Animation(angle=90, duration=0.1)
         anim.start(self)
         monster.get_dmg(self.weapon.damage)
-        Clock.schedule_once(self.back, 1)
 
     def change_weapon(self, weapon):
         self.weapon = weapon
         self.weapon_img.source = weapon.load_img_src()
-
-    def back(self, dt):
-        Animation(x=50, duration=0.1).start(self)
 
     @staticmethod
     def on_angle(item, angle):
@@ -64,12 +59,12 @@ class Monster(Image):
 
 
 class DisappearingImage(Image):
-    def __init__(self, src, pos=None, size=None, **kwargs):
+    def __init__(self, src, pos=None, size=None, duration=0.4, **kwargs):
         super(DisappearingImage, self).__init__(**kwargs)
         self.source = src
         self.pos_hint = pos
         self.size_hint = size
-        Clock.schedule_once(self.destroy, 0.5)
+        Clock.schedule_once(self.destroy, duration)
 
     def destroy(self, dt):
         self.parent.remove_widget(self)
