@@ -5,8 +5,8 @@ Game is still in development
 
 If you want to try it on windows you need to thing to install: 
 
-1. Python - [See how to install python](https://www.howtogeek.com/197947/how-to-install-python-on-windows/).[link to MAC install](https://www.python.org/downloads/release/python-365/).
-2. Kivy - [See how to install kivy](https://kivy.org/docs/installation/installation-windows.html).[installation on MAC](https://kivy.org/docs/installation/installation-osx.html).
+1. Python - [See how to install python](https://www.howtogeek.com/197947/how-to-install-python-on-windows/). [(link to MAC install)](https://www.python.org/downloads/release/python-365/).
+2. Kivy - [See how to install kivy](https://kivy.org/docs/installation/installation-windows.html). [(installation on MAC)](https://kivy.org/docs/installation/installation-osx.html).
 
 ## Now you need just to download and run the game:
 
