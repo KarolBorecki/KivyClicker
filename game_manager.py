@@ -1,3 +1,4 @@
+from kivy.core.audio import SoundLoader
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 
@@ -19,6 +20,9 @@ class GameManager(FloatLayout):
     next_monster_index = 0
 
     is_active = True
+
+    buy_sound = SoundLoader.load('sounds/buy.wav')
+    window_open_sound = SoundLoader.load('sounds/window_open.wav')
 
     def __init__(self, **kwargs):
         super(GameManager, self).__init__(**kwargs)
@@ -53,6 +57,8 @@ class GameManager(FloatLayout):
         self.money += self.current_arena.kill_bonus + self.current_monster.kill_bonus
 
     def open_window(self, menu_option):
+        self.player.attack_sound.stop()
+        self.window_open_sound.play()
         self.is_active = False
         if self.current_menu_window is not None:
             self.remove_widget(self.menu_windows[self.current_menu_window])
@@ -66,6 +72,8 @@ class GameManager(FloatLayout):
 
     def buy(self, per_click, per_second, price):
         if self.money >= price:
+            self.player.attack_sound.stop()
+            self.buy_sound.play()
             self.per_click += per_click
             self.per_sec += per_second
             self.money -= price

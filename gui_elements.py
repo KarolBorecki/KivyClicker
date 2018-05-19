@@ -9,7 +9,7 @@ from kivy.uix.label import Label
 class Player(Image):
     angle = NumericProperty(90)
 
-    hit_sound = SoundLoader.load('sounds/player_attack.wav')
+    attack_sound = SoundLoader.load('sounds/player_attack.wav')
 
     def __init__(self, costume_src, weapon, **kwargs):
         super(Player, self).__init__(**kwargs)
@@ -18,7 +18,7 @@ class Player(Image):
         self.weapon_img.source = self.weapon.load_img_src()
 
     def attack(self, monster):
-        self.hit_sound.play()
+        self.attack_sound.play()
         self.parent.add_widget(DisappearingImage("img/effects/dust.gif", {'center_x': .5, 'center_y': .5}, (.6, .6)))
         anim = Animation(angle=0, duration=0.05) + Animation(angle=90, duration=0.1)
         anim.start(self)

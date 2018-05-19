@@ -106,4 +106,4 @@ venv.bak/
 # idea
 .idea
 
-secret
+saves/restart_game.py
