@@ -2,6 +2,8 @@ from kivy.core.audio import SoundLoader
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 
+from gui_elements import DisappearingLabel
+
 
 class GameManager(FloatLayout):
     player = ObjectProperty(None)
@@ -78,6 +80,7 @@ class GameManager(FloatLayout):
             self.per_sec += per_second
             self.money -= price
             return True
+        self.add_widget(DisappearingLabel(text="You don't have enough money!", duration=1))
         return False
 
     def game_status(self):

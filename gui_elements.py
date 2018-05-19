@@ -1,6 +1,7 @@
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
+from kivy.core.window import Window
 from kivy.properties import NumericProperty
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -71,6 +72,25 @@ class DisappearingImage(Image):
         self.source = src
         self.pos_hint = pos
         self.size_hint = size
+        Clock.schedule_once(self.destroy, duration)
+
+    def destroy(self, dt):
+        self.parent.remove_widget(self)
+
+
+class DisappearingLabel(Label):
+    def __init__(self, text, pos=None, duration=0.4, **kwargs):
+        super(DisappearingLabel, self).__init__(**kwargs)
+
+        if pos is None:
+            pos = {'center_x': .5}
+
+        self.text = text
+        self.font_size = 25
+        self.pos_hint = pos
+        self.center_y = Window.height / 2 * -1 + 100
+        anim = Animation(y=Window.height / 2 * -1 + 200, duration=duration)
+        anim.start(self)
         Clock.schedule_once(self.destroy, duration)
 
     def destroy(self, dt):
