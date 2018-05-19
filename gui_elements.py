@@ -1,5 +1,6 @@
 from kivy.animation import Animation
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 from kivy.properties import NumericProperty
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -8,6 +9,8 @@ from kivy.uix.label import Label
 class Player(Image):
     angle = NumericProperty(90)
 
+    hit_sound = SoundLoader.load('sounds/player_attack.wav')
+
     def __init__(self, costume_src, weapon, **kwargs):
         super(Player, self).__init__(**kwargs)
         self.source = costume_src
@@ -15,6 +18,7 @@ class Player(Image):
         self.weapon_img.source = self.weapon.load_img_src()
 
     def attack(self, monster):
+        self.hit_sound.play()
         self.parent.add_widget(DisappearingImage("img/effects/dust.gif", {'center_x': .5, 'center_y': .5}, (.6, .6)))
         anim = Animation(angle=0, duration=0.05) + Animation(angle=90, duration=0.1)
         anim.start(self)
@@ -31,6 +35,8 @@ class Player(Image):
 
 
 class Monster(Image):
+    death_sound = SoundLoader.load('sounds/monster_death.wav')
+
     def __init__(self, name, health, kill_bonus, is_boss=False, **kwargs):
         super(Monster, self).__init__(**kwargs)
         self.name = name
@@ -50,6 +56,7 @@ class Monster(Image):
             self.dead()
 
     def dead(self):
+        self.death_sound.play()
         self.parent.spawn_monster()
         self.parent.on_kill()
         self.parent.remove_widget(self)

@@ -17,4 +17,4 @@ If you want to try it on windows you need to thing to install:
 -This should run project on windows and MAC.
 
 This is how it is looks like on windows:
-![output on windows](https://github.com/KarolBorecki/KivyClicker/blob/master/img/example.png)
+![output on windows](img/example.png)
