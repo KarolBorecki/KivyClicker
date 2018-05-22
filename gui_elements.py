@@ -3,6 +3,7 @@ from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 from kivy.core.window import Window
 from kivy.properties import NumericProperty
+from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 
@@ -64,6 +65,11 @@ class Monster(Image):
 
     def load_src(self):
         return "img/enemies/" + str(self.name) + ".png"
+
+
+class MenuButton(ButtonBehavior, Image):
+    def __init__(self, **kwargs):
+        super(MenuButton, self).__init__(**kwargs)
 
 
 class DisappearingImage(Image):
