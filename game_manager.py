@@ -28,6 +28,7 @@ class GameManager(FloatLayout):
 
     def __init__(self, **kwargs):
         super(GameManager, self).__init__(**kwargs)
+        Clock.schedule_interval(self.add_per_second, 1.0)
 
     def add_per_second(self, dt):
         self.money += self.per_sec
