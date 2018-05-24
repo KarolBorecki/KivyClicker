@@ -1,8 +1,6 @@
-from kivy.uix.label import Label
-
 from arena import Arena
 from gui_elements import Monster, Player
-from shop_loader import load_weapon, load_potion, load_armor
+from shop_loader import load_weapon, load_potion, load_armor, load_costumes
 from windows import ShopWindow, ArenaWindow
 
 
@@ -71,6 +69,11 @@ def save_game(game):
         arena_save_file.write(str(int(a.is_bought)) + "\n")
     arena_save_file.close()
 
+    costume_save_file = open("saves/costume_saves.txt", "w")
+    for a in game.menu_windows[3].content:
+        costume_save_file.write(str(int(a.is_bought)) + "\n")
+    costume_save_file.close()
+
 
 def load_game(game):
     save_file = open("saves/game_info_save.txt", "r")
@@ -82,9 +85,8 @@ def load_game(game):
     game.current_arena = game.arena[int(data[2])]
     game.per_click = game.current_arena.per_click
     game.menu_windows = [ShopWindow("Weapon", load_weapon()), ShopWindow("Armor", load_armor()),
-                         ShopWindow("Alchemy", load_potion()), ShopWindow("Costumes", []),
+                         ShopWindow("Alchemy", load_potion()), ShopWindow("Costumes", load_costumes()),
                          ArenaWindow(game)]
-    game.menu_windows[3].add_widget(Label(text="Coming soon", font_size=40, pos_hint={'center_x': .5, 'center_y': .5}))
     game.player = Player(data[3].split()[0], game.menu_windows[0].content[int(data[4])])
     game.add_widget(game.player)
     game.background.source = game.current_arena.load_background_source()

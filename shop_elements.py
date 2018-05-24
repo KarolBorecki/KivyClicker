@@ -70,5 +70,25 @@ class Potion(Upgrade):
             self.price *= self.count + 1
             self.load_text(self.get_text())
 
-    def get_text(self):
-        return str(self.adds_per_second) + " /sec " + str(self.damage) + " dmg"
+
+class Costume(Upgrade):
+    def __init__(self, name, price, is_bought, **kwargs):
+        super(Costume, self).__init__(name, price, "", **kwargs)
+        self.is_bought = is_bought
+        self.bind(on_press=self.on_click)
+
+        if is_bought:
+            self.on_buy()
+
+    def on_click(self, instance):
+        parent = self.parent.parent.parent.parent.parent
+        if not self.is_bought:
+            if parent.buy(0, 0, self.price):
+                parent.player.player_img.source = self.load_img_src()
+                self.is_bought = 1
+                self.on_buy()
+        else:
+            parent.player.player_img.source = self.load_img_src()
+
+    def on_buy(self):
+        self.info_label.text = "SET"

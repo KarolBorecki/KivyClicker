@@ -1,5 +1,5 @@
 from kivy.core.audio import SoundLoader
-from kivy.properties import NumericProperty, ObjectProperty
+from kivy.properties import NumericProperty, ObjectProperty, Clock
 from kivy.uix.floatlayout import FloatLayout
 
 from gui_elements import DisappearingLabel

@@ -1,4 +1,4 @@
-from shop_elements import Weapon, Armor, Potion
+from shop_elements import Weapon, Armor, Potion, Costume
 
 weapon_names = ["Wooden sword", "Iron dagger", "Rusty sword", "Iron sword", "Long iron sword",
                 "Golden sword", "Iron hammer", "Heavy iron sword", "Long iron hammer",
@@ -43,6 +43,10 @@ mixture_damage = [0, 0.5, 0.5, 1,
                   0, 1, 1, 2]
 mixture_per_seconds = [0.3, 1, 1.5, 3,
                        4.7, 7.3, 10, 13.1]
+
+costume_names = ["Default", "Yellow"]
+
+costume_prices = [0, 20]
 
 
 def read_counts_from_file(file_name):
@@ -99,3 +103,18 @@ def load_potion():
                              float(prices[i]) * (int(counts[i]) + 1), int(counts[i])))
         i += 1
     return potion
+
+
+def load_costumes():
+    names = costume_names
+    prices = costume_prices
+    counts = read_counts_from_file("saves/costume_saves.txt")
+
+    costumes = []
+
+    i = 0
+    while i < len(names):
+        costumes.append(Costume(str(names[i]), float(prices[i]), int(counts[i])))
+        i += 1
+
+    return costumes
