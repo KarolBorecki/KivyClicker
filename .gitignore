@@ -106,4 +106,8 @@ venv.bak/
 # idea
 .idea
 
-saves
+saves/game_info_save.txt
+saves/potion_counts.txt
+saves/weapon_save.txt
+saves/armor_save.txt
+saves/arena_save.txt
