@@ -46,7 +46,7 @@ def save_game(game):
     save_file.write(str(game.money) + "\n")
     save_file.write(str(game.per_sec) + "\n")
     save_file.write(str(game.current_arena.number) + "\n")
-    save_file.write(str(game.player.source) + "\n")
+    save_file.write(str(game.player.player_img.source) + "\n")
     save_file.write(str(game.player.weapon.number) + "\n")
 
     save_file.close()

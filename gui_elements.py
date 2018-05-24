@@ -4,18 +4,19 @@ from kivy.core.audio import SoundLoader
 from kivy.core.window import Window
 from kivy.properties import NumericProperty
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 
 
-class Player(Image):
+class Player(FloatLayout):
     angle = NumericProperty(90)
 
     attack_sound = SoundLoader.load('sounds/player_attack.wav')
 
     def __init__(self, costume_src, weapon, **kwargs):
         super(Player, self).__init__(**kwargs)
-        self.source = costume_src
+        self.player_img.source = costume_src
         self.weapon = weapon
         self.weapon_img.source = self.weapon.load_img_src()
 

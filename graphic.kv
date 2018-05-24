@@ -6,32 +6,31 @@
     font_name: "fonts/font.ttf"
 
 <Player>:
-    items_area: items_area
+    player_img: player_img
     weapon_img: weapon
 
+    allow_stretch: False
     size_hint: .3, .3
-
     pos_hint: {'center_x': .35, 'center_y': .5}
 
-    FloatLayout:
-        id: items_area
-        pos: root.pos
-        size_hint: root.size_hint
+    Image:
+        id: player_img
+        pos_hint: {'center_x': .5, 'center_y': .5}
 
-        Image:
-            id: weapon
-            pos_hint: {'x': 0.7, 'y': .9}
-            size_hint_y: .7
+    Image:
+        id: weapon
+        pos_hint: {'center_x': .85, 'center_y': .35}
+        size_hint_y: .15
 
-            canvas.before:
-                PushMatrix
-                Rotate:
-                    angle: root.angle
-                    axis: 0, 0, 1
-                    origin: self.pos
+        canvas.before:
+            PushMatrix
+            Rotate:
+                angle: root.angle
+                axis: 0, 0, 1
+                origin: self.pos
 
-            canvas.after:
-                PopMatrix
+        canvas.after:
+            PopMatrix
 
 <Monster>:
     pos_hint: {'center_x': .65, 'center_y': .5}
