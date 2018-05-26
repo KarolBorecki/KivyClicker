@@ -72,23 +72,34 @@ class Potion(Upgrade):
 
 
 class Costume(Upgrade):
-    def __init__(self, name, price, is_bought, **kwargs):
+    def __init__(self, number, name, price, is_bought, **kwargs):
         super(Costume, self).__init__(name, price, "", **kwargs)
+        self.number = number
         self.is_bought = is_bought
         self.bind(on_press=self.on_click)
 
         if is_bought:
-            self.on_buy()
+            self.set_text()
 
     def on_click(self, instance):
         parent = self.parent.parent.parent.parent.parent
         if not self.is_bought:
             if parent.buy(0, 0, self.price):
-                parent.player.player_img.source = self.load_img_src()
-                self.is_bought = 1
-                self.on_buy()
+                self.on_buy(parent)
         else:
-            parent.player.player_img.source = self.load_img_src()
+            self.on_set(parent)
 
-    def on_buy(self):
+    def on_buy(self, parent):
+        self.set_text()
+        self.is_bought = 1
+        self.on_set(parent)
+
+    def on_set(self, parent):
+        parent.player.costume.disabled = False
+        self.disabled = True
+
+        parent.player.costume = self
+        parent.player.load_img()
+
+    def set_text(self):
         self.info_label.text = "SET"

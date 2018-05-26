@@ -14,11 +14,12 @@ class Player(FloatLayout):
 
     attack_sound = SoundLoader.load('sounds/player_attack.wav')
 
-    def __init__(self, costume_src, weapon, **kwargs):
+    def __init__(self, costume, weapon, **kwargs):
         super(Player, self).__init__(**kwargs)
-        self.player_img.source = costume_src
+        self.costume = costume
         self.weapon = weapon
         self.weapon_img.source = self.weapon.load_img_src()
+        self.load_img()
 
     def attack(self, monster):
         self.attack_sound.play()
@@ -35,6 +36,9 @@ class Player(FloatLayout):
     def on_angle(item, angle):
         if angle == 360:
             item.angle = 0
+
+    def load_img(self):
+        self.player_img.source = self.costume.load_img_src()
 
 
 class Monster(Image):
@@ -93,7 +97,7 @@ class DisappearingLabel(Label):
             pos = {'center_x': .5}
 
         self.text = text
-        self.font_size = 25
+        self.font_size = font_size
         self.pos_hint = pos
         self.center_y = Window.height / 2 * -1 + 100
         anim = Animation(y=Window.height / 2 * -1 + 200, duration=duration)

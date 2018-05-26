@@ -114,7 +114,7 @@ def load_costumes():
 
     i = 0
     while i < len(names):
-        costumes.append(Costume(str(names[i]), float(prices[i]), int(counts[i])))
+        costumes.append(Costume(i, str(names[i]), float(prices[i]), int(counts[i])))
         i += 1
 
     return costumes

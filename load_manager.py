@@ -44,7 +44,7 @@ def save_game(game):
     save_file.write(str(game.money) + "\n")
     save_file.write(str(game.per_sec) + "\n")
     save_file.write(str(game.current_arena.number) + "\n")
-    save_file.write(str(game.player.player_img.source) + "\n")
+    save_file.write(str(game.player.costume.number) + "\n")
     save_file.write(str(game.player.weapon.number) + "\n")
 
     save_file.close()
@@ -87,7 +87,7 @@ def load_game(game):
     game.menu_windows = [ShopWindow("Weapon", load_weapon()), ShopWindow("Armor", load_armor()),
                          ShopWindow("Alchemy", load_potion()), ShopWindow("Costumes", load_costumes()),
                          ArenaWindow(game)]
-    game.player = Player(data[3].split()[0], game.menu_windows[0].content[int(data[4])])
+    game.player = Player(game.menu_windows[3].content[int(data[3])], game.menu_windows[0].content[int(data[4])])
     game.add_widget(game.player)
     game.background.source = game.current_arena.load_background_source()
     game.spawn_monster()
