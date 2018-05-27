@@ -35,9 +35,6 @@ class Weapon(Upgrade):
             if game.player.weapon.damage < self.damage:
                 game.player.change_weapon(self)
 
-    def get_text(self):
-        return str(self.damage) + " dmg"
-
 
 class Armor(Upgrade):
     def __init__(self, adds_per_second, name, price, is_bought, **kwargs):
@@ -51,9 +48,6 @@ class Armor(Upgrade):
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(0, self.adds_per_second, self.price):
             self.disabled = True
-
-    def get_text(self):
-        return str(self.adds_per_second) + " /sec"
 
 
 class Potion(Upgrade):
