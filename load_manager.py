@@ -87,7 +87,9 @@ def load_game(game):
     game.menu_windows = [ShopWindow("Weapon", load_weapon()), ShopWindow("Armor", load_armor()),
                          ShopWindow("Alchemy", load_potion()), ShopWindow("Costumes", load_costumes()),
                          ArenaWindow(game)]
-    game.player = Player(game.menu_windows[3].content[int(data[3])], game.menu_windows[0].content[int(data[4])])
+    costume = game.menu_windows[3].content[int(data[3])]
+    game.player = Player(costume, game.menu_windows[0].content[int(data[4])])
+    costume.on_set(game)
     game.add_widget(game.player)
     game.background.source = game.current_arena.load_background_source()
     game.spawn_monster()
