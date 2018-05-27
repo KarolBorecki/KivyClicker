@@ -6,35 +6,34 @@
     font_name: "fonts/font.ttf"
 
 <Player>:
-    items_area: items_area
+    player_img: player_img
     weapon_img: weapon
 
+    allow_stretch: False
     size_hint: .3, .3
+    pos_hint: {'center_x': .35, 'center_y': .5}
 
-    pos: 50, 350
+    Image:
+        id: player_img
+        pos_hint: {'center_x': .5, 'center_y': .5}
 
-    FloatLayout:
-        id: items_area
-        pos: root.pos
-        size_hint: root.size_hint
+    Image:
+        id: weapon
+        pos_hint: {'center_x': .85, 'center_y': .35}
+        size_hint_y: .15
 
-        Image:
-            id: weapon
-            pos_hint: {'x': 0.7, 'y': .9}
-            size_hint_y: .7
+        canvas.before:
+            PushMatrix
+            Rotate:
+                angle: root.angle
+                axis: 0, 0, 1
+                origin: self.pos
 
-            canvas.before:
-                PushMatrix
-                Rotate:
-                    angle: root.angle
-                    axis: 0, 0, 1
-                    origin: self.pos
-
-            canvas.after:
-                PopMatrix
+        canvas.after:
+            PopMatrix
 
 <Monster>:
-    pos_hint: {'center_x': .8, 'center_y': .5}
+    pos_hint: {'center_x': .65, 'center_y': .5}
     allow_stretch: True
     size_hint_y: .15
 
@@ -71,10 +70,6 @@
                 id: info_label
                 halign: "center"
                 font_size: 35
-
-<MenuButton@Button>:
-    size_hint: (.2, None)
-    height: self.width
 
 <ExitButton@Button>:
     border: (0,0,0,0)
@@ -204,9 +199,14 @@
 
                 on_press: root.change_arena(1)
 
+<MenuButton>:
+    size_hint: (.2, None)
+    height: self.width
+
 <GameManager>:
     menu: menu
     background: background
+    arena_btn: arena_btn
 
     FloatLayout:
         Image:
@@ -228,30 +228,25 @@
             spacing: self.width * 2/40
 
             MenuButton:
-                background_down: "img/icons/sword_fatality.png"
-                background_normal: "img/icons/sword_fatality.png"
                 on_press: root.open_window(0)
+                source: "img/icons/weapon_ico.png"
 
             MenuButton:
-                background_down: "img/icons/iron helmet.png"
-                background_normal: "img/icons/iron helmet.png"
                 on_press: root.open_window(1)
+                source: "img/icons/armor_ico.png"
 
             MenuButton:
-                background_down: "img/icons/mixture_ico.png"
-                background_normal: "img/icons/mixture_ico.png"
                 on_press: root.open_window(2)
+                source: "img/icons/mixture_ico.png"
 
             MenuButton:
-                background_down: "img/icons/golden_chest_close.png"
-                background_normal: "img/icons/golden_chest_close.png"
                 on_press: root.open_window(3)
+                source: "img/icons/costume_ico.png"
 
         MenuButton:
+            id: arena_btn
             pos_hint: {'top': 1, 'x': 0}
-            background_down: "img/icons/arena_ico.png"
-            background_normal: "img/icons/arena_ico.png"
-
             on_press: root.open_window(4)
+            source: "img/icons/arena_ico.png"
 
 

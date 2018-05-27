@@ -35,9 +35,6 @@ class Weapon(Upgrade):
             if game.player.weapon.damage < self.damage:
                 game.player.change_weapon(self)
 
-    def get_text(self):
-        return str(self.damage) + " dmg"
-
 
 class Armor(Upgrade):
     def __init__(self, adds_per_second, name, price, is_bought, **kwargs):
@@ -51,9 +48,6 @@ class Armor(Upgrade):
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(0, self.adds_per_second, self.price):
             self.disabled = True
-
-    def get_text(self):
-        return str(self.adds_per_second) + " /sec"
 
 
 class Potion(Upgrade):
@@ -70,5 +64,36 @@ class Potion(Upgrade):
             self.price *= self.count + 1
             self.load_text(self.get_text())
 
-    def get_text(self):
-        return str(self.adds_per_second) + " /sec " + str(self.damage) + " dmg"
+
+class Costume(Upgrade):
+    def __init__(self, number, name, price, is_bought, **kwargs):
+        super(Costume, self).__init__(name, price, "", **kwargs)
+        self.number = number
+        self.is_bought = is_bought
+        self.bind(on_press=self.on_click)
+
+        if is_bought:
+            self.set_text()
+
+    def on_click(self, instance):
+        parent = self.parent.parent.parent.parent.parent
+        if not self.is_bought:
+            if parent.buy(0, 0, self.price):
+                self.on_buy(parent)
+        else:
+            self.on_set(parent)
+
+    def on_buy(self, parent):
+        self.set_text()
+        self.is_bought = 1
+        self.on_set(parent)
+
+    def on_set(self, parent):
+        parent.player.costume.disabled = False
+        self.disabled = True
+
+        parent.player.costume = self
+        parent.player.load_img()
+
+    def set_text(self):
+        self.info_label.text = "SET"

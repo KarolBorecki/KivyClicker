@@ -1,5 +1,8 @@
-from kivy.properties import NumericProperty, ObjectProperty
+from kivy.core.audio import SoundLoader
+from kivy.properties import NumericProperty, ObjectProperty, Clock
 from kivy.uix.floatlayout import FloatLayout
+
+from gui_elements import DisappearingLabel
 
 
 class GameManager(FloatLayout):
@@ -20,19 +23,20 @@ class GameManager(FloatLayout):
 
     is_active = True
 
+    buy_sound = SoundLoader.load('sounds/buy.wav')
+    window_open_sound = SoundLoader.load('sounds/window_open.wav')
+
     def __init__(self, **kwargs):
         super(GameManager, self).__init__(**kwargs)
+        Clock.schedule_interval(self.add_per_second, 1.0)
 
     def add_per_second(self, dt):
         self.money += self.per_sec
-        if self.per_sec > 0:
-            self.game_status()
 
     def on_touch_down(self, touch):
         if self.is_active:
             self.player.attack(self.current_monster)
             self.money += self.per_click
-            self.game_status()
         super(GameManager, self).on_touch_down(touch)
 
     def spawn_monster(self):
@@ -41,15 +45,20 @@ class GameManager(FloatLayout):
         if self.next_monster_index >= len(self.current_arena.monsters):
             self.next_monster_index = 0
         if monster.is_boss:
-            print("BOSS FIGHT")
+            self.add_widget(DisappearingLabel("BOSS FIGHT", font_size=50, duration=2))
 
         self.current_monster = monster
+
+        self.remove_widget(self.player)
         self.add_widget(monster)
+        self.add_widget(self.player)
 
     def on_kill(self):
         self.money += self.current_arena.kill_bonus + self.current_monster.kill_bonus
 
     def open_window(self, menu_option):
+        self.player.attack_sound.stop()
+        self.window_open_sound.play()
         self.is_active = False
         if self.current_menu_window is not None:
             self.remove_widget(self.menu_windows[self.current_menu_window])
@@ -63,10 +72,13 @@ class GameManager(FloatLayout):
 
     def buy(self, per_click, per_second, price):
         if self.money >= price:
+            self.player.attack_sound.stop()
+            self.buy_sound.play()
             self.per_click += per_click
             self.per_sec += per_second
             self.money -= price
             return True
+        self.add_widget(DisappearingLabel(text="You don't have enough money!", duration=1))
         return False
 
     def game_status(self):

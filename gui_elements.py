@@ -1,41 +1,49 @@
 from kivy.animation import Animation
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
+from kivy.core.window import Window
 from kivy.properties import NumericProperty
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 
 
-class Player(Image):
+class Player(FloatLayout):
     angle = NumericProperty(90)
 
-    def __init__(self, costume_src, weapon, **kwargs):
+    attack_sound = SoundLoader.load('sounds/player_attack.wav')
+
+    def __init__(self, costume, weapon, **kwargs):
         super(Player, self).__init__(**kwargs)
-        self.source = costume_src
+        self.costume = costume
         self.weapon = weapon
         self.weapon_img.source = self.weapon.load_img_src()
+        self.load_img()
 
     def attack(self, monster):
-        self.parent.add_widget(DisappearingImage("img/effects/dust_1.gif", {'center_x': .65, 'center_y': .5}, (.6, .6)))
-        anim = Animation(x=self.parent.current_monster.x+50, duration=0.05) + Animation(angle=0, duration=0.05) + \
-               Animation(angle=90, duration=0.1)
+        self.attack_sound.play()
+        self.parent.add_widget(DisappearingImage("img/effects/dust.gif", {'center_x': .5, 'center_y': .5}, (.6, .6)))
+        anim = Animation(angle=0, duration=0.05) + Animation(angle=90, duration=0.1)
         anim.start(self)
         monster.get_dmg(self.weapon.damage)
-        Clock.schedule_once(self.back, 1)
 
     def change_weapon(self, weapon):
         self.weapon = weapon
         self.weapon_img.source = weapon.load_img_src()
-
-    def back(self, dt):
-        Animation(x=50, duration=0.1).start(self)
 
     @staticmethod
     def on_angle(item, angle):
         if angle == 360:
             item.angle = 0
 
+    def load_img(self):
+        self.player_img.source = self.costume.load_img_src()
+
 
 class Monster(Image):
+    death_sound = SoundLoader.load('sounds/monster_death.wav')
+
     def __init__(self, name, health, kill_bonus, is_boss=False, **kwargs):
         super(Monster, self).__init__(**kwargs)
         self.name = name
@@ -55,6 +63,7 @@ class Monster(Image):
             self.dead()
 
     def dead(self):
+        self.death_sound.play()
         self.parent.spawn_monster()
         self.parent.on_kill()
         self.parent.remove_widget(self)
@@ -63,13 +72,40 @@ class Monster(Image):
         return "img/enemies/" + str(self.name) + ".png"
 
 
+class MenuButton(ButtonBehavior, Image):
+    def __init__(self, **kwargs):
+        super(MenuButton, self).__init__(**kwargs)
+
+
 class DisappearingImage(Image):
-    def __init__(self, src, pos=None, size=None, **kwargs):
+    def __init__(self, src, pos=None, size=None, duration=0.4, **kwargs):
         super(DisappearingImage, self).__init__(**kwargs)
         self.source = src
         self.pos_hint = pos
         self.size_hint = size
-        Clock.schedule_once(self.destroy, 0.5)
+        Clock.schedule_once(self.destroy, duration)
+
+    def destroy(self, dt):
+        self.parent.remove_widget(self)
+
+
+class DisappearingLabel(Label):
+    def __init__(self, text, pos=None, font_size=None, duration=0.4, **kwargs):
+        super(DisappearingLabel, self).__init__(**kwargs)
+
+        if pos is None:
+            pos = {'center_x': .5}
+
+        if font_size is None:
+            font_size = 25
+
+        self.text = text
+        self.font_size = font_size
+        self.pos_hint = pos
+        self.center_y = Window.height / 2 * -1 + 100
+        anim = Animation(y=Window.height / 2 * -1 + 200, duration=duration)
+        anim.start(self)
+        Clock.schedule_once(self.destroy, duration)
 
     def destroy(self, dt):
         self.parent.remove_widget(self)
