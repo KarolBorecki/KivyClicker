@@ -90,11 +90,14 @@ class DisappearingImage(Image):
 
 
 class DisappearingLabel(Label):
-    def __init__(self, text, pos=None, duration=0.4, **kwargs):
+    def __init__(self, text, pos=None, font_size=None, duration=0.4, **kwargs):
         super(DisappearingLabel, self).__init__(**kwargs)
 
         if pos is None:
             pos = {'center_x': .5}
+
+        if font_size is None:
+            font_size = 25
 
         self.text = text
         self.font_size = font_size

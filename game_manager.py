@@ -45,7 +45,7 @@ class GameManager(FloatLayout):
         if self.next_monster_index >= len(self.current_arena.monsters):
             self.next_monster_index = 0
         if monster.is_boss:
-            print("BOSS FIGHT")
+            self.add_widget(DisappearingLabel("BOSS FIGHT", font_size=50, duration=2))
 
         self.current_monster = monster
 
