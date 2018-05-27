@@ -44,9 +44,11 @@ mixture_damage = [0, 0.5, 0.5, 1,
 mixture_per_seconds = [0.3, 1, 1.5, 3,
                        4.7, 7.3, 10, 13.1]
 
-costume_names = ["Default", "Yellow", "Fighter"]
+costume_names = ["Default", "Yellow", "Fighter", "Grandfather",
+                 "Pirate"]
 
-costume_prices = [0, 1000, 20000]
+costume_prices = [0, 20000, 100000, 500000,
+                  1000000]
 
 
 def read_counts_from_file(file_name):
