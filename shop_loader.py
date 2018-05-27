@@ -37,16 +37,16 @@ armor_per_seconds = [0.3, 1, 1.5,
 
 mixture_names = ["Small health mixture", "Small mana mixture", "Small protect mixture", "Small strength mixture",
                  "Big health mixture", "Big mana mixture", "Big protect mixture", "Big strength mixture"]
-mixture_prices = [1500, 3000, 5000, 10000,
+mixture_prices = [1000, 3000, 5000, 10000,
                   40000, 90000, 100000, 200000]
 mixture_damage = [0, 0.5, 0.5, 1,
                   0, 1, 1, 2]
 mixture_per_seconds = [0.3, 1, 1.5, 3,
                        4.7, 7.3, 10, 13.1]
 
-costume_names = ["Default", "Yellow"]
+costume_names = ["Default", "Yellow", "Fighter"]
 
-costume_prices = [0, 20]
+costume_prices = [0, 1000, 20000]
 
 
 def read_counts_from_file(file_name):
