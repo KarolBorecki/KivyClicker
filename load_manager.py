@@ -93,3 +93,46 @@ def load_game(game):
     game.add_widget(game.player)
     game.background.source = game.current_arena.load_background_source()
     game.spawn_monster()
+
+
+def reset(game):
+    save_file = open("saves/game_info_save.txt", "w")
+
+    save_file.write(str(0) + "\n")
+    save_file.write(str(0) + "\n")
+    save_file.write(str(0) + "\n")
+    save_file.write(str(0) + "\n")
+    save_file.write(str(0) + "\n")
+
+    save_file.close()
+
+    i = 1
+    weapon_save_file = open("saves/weapon_save.txt", "w")
+    for weapon in game.menu_windows[0].content:
+        weapon_save_file.write(str(int(i)) + "\n")
+        i = 0
+    weapon_save_file.close()
+
+    armor_save_file = open("saves/armor_save.txt", "w")
+    for armor in game.menu_windows[1].content:
+        armor_save_file.write(str(int(i)) + "\n")
+    armor_save_file.close()
+
+    potion_counts_file = open("saves/potion_counts.txt", "w")
+    for potion in game.menu_windows[2].content:
+        potion_counts_file.write(str(i) + "\n")
+    potion_counts_file.close()
+
+    i = 1
+    arena_save_file = open("saves/arena_save.txt", "w")
+    for a in game.arena:
+        arena_save_file.write(str(int(i)) + "\n")
+        i = 0
+    arena_save_file.close()
+
+    i = 1
+    costume_save_file = open("saves/costume_saves.txt", "w")
+    for a in game.menu_windows[3].content:
+        costume_save_file.write(str(int(i)) + "\n")
+        i = 0
+    costume_save_file.close()
