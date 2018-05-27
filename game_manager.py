@@ -32,14 +32,11 @@ class GameManager(FloatLayout):
 
     def add_per_second(self, dt):
         self.money += self.per_sec
-        if self.per_sec > 0:
-            self.game_status()
 
     def on_touch_down(self, touch):
         if self.is_active:
             self.player.attack(self.current_monster)
             self.money += self.per_click
-            self.game_status()
         super(GameManager, self).on_touch_down(touch)
 
     def spawn_monster(self):
