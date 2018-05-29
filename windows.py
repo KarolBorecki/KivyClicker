@@ -45,10 +45,13 @@ class ArenaWindow(PopupWindow):
         self.refresh(self.parent)
 
     def buy(self):
+        if self.parent.buy(self.current_arena.per_click, 0, self.current_arena.price):
+            self.current_arena.is_bought = True
+            self.refresh(self.parent)
+
+    def on_set_click(self):
         if not self.current_arena.is_bought:
-            if self.parent.buy(self.current_arena.per_click, 0, self.current_arena.price):
-                self.current_arena.is_bought = True
-                self.refresh(self.parent)
+            self.buy()
         else:
             self.parent.current_arena = self.current_arena
             self.parent.background.source = self.current_arena.load_background_source()

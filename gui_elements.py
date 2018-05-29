@@ -112,23 +112,22 @@ class DisappearingLabel(Label):
 
 
 class MoneyLabel(Label):
-    def __init__(self, **kwargs):
+    def __init__(self, round_places=1, **kwargs):
         super(MoneyLabel, self).__init__(**kwargs)
+        self.round_places = round_places
 
-    @staticmethod
-    def set_text(price, round_places=1):
-        round_places = round_places
+    def set_text(self, price):
         if price >= 1000000000:
-            return str(round(price / 1000000000, round_places)) + "mld$"
+            return str(round(price / 1000000000, self.round_places)) + "mld$"
 
         elif price >= 1000000:
-            return str(round(price/1000000, round_places)) + "mln$"
+            return str(round(price / 1000000, self.round_places)) + "mln$"
 
         elif price >= 1000:
-            return str(round(price/1000, round_places)) + "tys$"
+            return str(round(price / 1000, self.round_places)) + "tys$"
 
         else:
-            return str(round(price, round_places)) + "$"
+            return str(round(price, self.round_places)) + "$"
 
     @staticmethod
     def set_upgrade_text(price):

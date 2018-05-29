@@ -43,8 +43,6 @@ class Armor(Upgrade):
         self.disabled = is_bought
         self.bind(on_press=self.on_click)
 
-        self.font_size = 20
-
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(0, self.adds_per_second, self.price):
             self.disabled = True

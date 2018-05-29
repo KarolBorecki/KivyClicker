@@ -25,6 +25,10 @@ class GameManager(FloatLayout):
 
     buy_sound = SoundLoader.load('sounds/buy.wav')
     window_open_sound = SoundLoader.load('sounds/window_open.wav')
+    switch_sound = SoundLoader.load('sounds/switch.wav')
+    failed_buy_sound = SoundLoader.load('sounds/failed_buy.wav')
+    arena_change_sound = SoundLoader.load('sounds/arena_change.wav')
+    costume_change_sound = SoundLoader.load('sounds/costume_change.wav')
 
     def __init__(self, **kwargs):
         super(GameManager, self).__init__(**kwargs)
@@ -79,6 +83,7 @@ class GameManager(FloatLayout):
             self.money -= price
             return True
         self.add_widget(DisappearingLabel(text="You don't have enough money!", duration=1))
+        self.failed_buy_sound.play()
         return False
 
     def game_status(self):
