@@ -85,8 +85,8 @@ class Costume(Upgrade):
 
     def on_buy(self, parent):
         self.set_text()
-        self.is_bought = 1
         self.on_set(parent)
+        self.is_bought = 1
 
     def on_set(self, parent):
         parent.player.costume.disabled = False
@@ -94,6 +94,8 @@ class Costume(Upgrade):
 
         parent.player.costume = self
         parent.player.load_img()
+        if self.is_bought == 1:
+            parent.costume_change_sound.play()
 
     def set_text(self):
         self.info_label.text = "SET"

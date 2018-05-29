@@ -40,6 +40,7 @@ class ArenaWindow(PopupWindow):
         self.refresh(parent)
 
     def change_arena(self, direction):
+        self.parent.switch_sound.play()
         self.current_arena_number += direction
         self.refresh(self.parent)
 
@@ -53,11 +54,12 @@ class ArenaWindow(PopupWindow):
             self.parent.background.source = self.current_arena.load_background_source()
             self.parent.remove_widget(self.parent.current_monster)
             self.parent.spawn_monster()
+            self.parent.arena_change_sound.play()
             self.parent.open_window(4)
             self.refresh(self.parent)
 
     def refresh(self, parent):
-        moneylabel = MoneyLabel()
+        money_label = MoneyLabel()
         self.current_arena = parent.arena[self.current_arena_number]
         self.header.text = self.current_arena.name
 
@@ -69,7 +71,7 @@ class ArenaWindow(PopupWindow):
             self.buy_btn.text = "Set"
         if not self.current_arena.is_bought:
             self.buy_btn.disabled = False
-            self.buy_btn.text = moneylabel.set_text(self.current_arena.price)
+            self.buy_btn.text = money_label.set_upgrade_text(self.current_arena.price)
             self.arena_img.source = "img/arena/icons/na.png"
         else:
             self.arena_img.source = self.current_arena.load_ico_source()
