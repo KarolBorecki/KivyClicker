@@ -10,7 +10,7 @@ class Upgrade(Button):
         self.img.source = self.load_img_src()
         self.info_label.markup = True
         self.name_label.text = name
-        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n[size=18]" + str(text) + "[/size]"
+        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n" + str(text)
 
     def reset(self):
         self.price = self.primary_price
