@@ -1,4 +1,4 @@
-from shop_elements import Weapon, Armor, Potion, Costume
+from shop_elements import Weapon, Armor, Mixture, Costume
 
 weapon_names = ["Wooden sword", "Iron dagger", "Rusty sword", "Iron sword", "Long iron sword",
                 "Golden sword", "Iron hammer", "Heavy iron sword", "Long iron hammer",
@@ -8,6 +8,7 @@ weapon_prices = [0, 200, 500, 800, 1000, 1500, 2000, 4000, 8000, 10000, 20000, 5
                  300000, 800000, 2000000, 5000000, 10000000, 15000000]
 weapon_damage = [1, 3, 5, 7, 10, 13, 10, 13, 15, 20, 24, 30, 40, 51, 63,
                  70, 80, 90, 97, 100]
+
 
 armor_names = ["Light iron helmet", "Light golden helmet", "Light diamond helmet",
                "Light iron boots", "Light golden boots", "Light diamond boots",
@@ -35,6 +36,7 @@ armor_per_seconds = [0.3, 1, 1.5,
                      97.2, 100.2, 109.3,
                      110.2, 112.4, 115.3]
 
+
 mixture_names = ["Small health mixture", "Small mana mixture", "Small protect mixture", "Small strength mixture",
                  "Big health mixture", "Big mana mixture", "Big protect mixture", "Big strength mixture"]
 mixture_prices = [1000, 3000, 5000, 10000,
@@ -44,9 +46,9 @@ mixture_damage = [1, 1.5, 1, 4,
 mixture_per_seconds = [5, 10, 15, 3,
                        10, 15, 15, 20]
 
+
 costume_names = ["Default", "Yellow", "Fighter", "Grandfather",
                  "Pirate"]
-
 costume_prices = [0, 20000, 100000, 500000,
                   1000000]
 
@@ -91,20 +93,20 @@ def load_armor():
     return armor
 
 
-def load_potion():
+def load_mixture():
     names = mixture_names
     prices = mixture_prices
     damage = mixture_damage
     per_seconds = mixture_per_seconds
     counts = read_counts_from_file("saves/potion_counts.txt")
 
-    potion = []
+    mixture = []
     i = 0
     while i < len(names):
-        potion.append(Potion(float(per_seconds[i]), int(damage[i]), str(names[i]),
-                             float(prices[i]) * (int(counts[i]) + 1), int(counts[i])))
+        mixture.append(Mixture(float(per_seconds[i]), int(damage[i]), str(names[i]),
+                               float(prices[i]) * (int(counts[i]) + 1), int(counts[i])))
         i += 1
-    return potion
+    return mixture
 
 
 def load_costumes():

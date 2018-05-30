@@ -51,9 +51,9 @@ class Armor(Upgrade):
             self.disabled = True
 
 
-class Potion(Upgrade):
+class Mixture(Upgrade):
     def __init__(self, adds_per_second, damage, name, price, count, **kwargs):
-        super(Potion, self).__init__(name, price, str(adds_per_second) + "/sec " + str(damage) + " dmg", **kwargs)
+        super(Mixture, self).__init__(name, price, str(adds_per_second) + "/sec " + str(damage) + " dmg", **kwargs)
         self.adds_per_second = adds_per_second
         self.damage = damage
         self.count = count

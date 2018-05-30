@@ -1,6 +1,6 @@
 from arena import Arena
 from gui_elements import Monster, Player
-from shop_loader import load_weapon, load_potion, load_armor, load_costumes
+from shop_loader import load_weapon, load_mixture, load_armor, load_costumes
 from windows import ShopWindow, ArenaWindow
 
 
@@ -85,7 +85,7 @@ def load_game(game):
     game.current_arena = game.arena[int(data[2])]
     game.per_click = game.current_arena.per_click
     game.menu_windows = [ShopWindow("Weapon", load_weapon()), ShopWindow("Armor", load_armor()),
-                         ShopWindow("Alchemy", load_potion()), ShopWindow("Costumes", load_costumes()),
+                         ShopWindow("Alchemy", load_mixture()), ShopWindow("Costumes", load_costumes()),
                          ArenaWindow(game)]
     costume = game.menu_windows[3].content[int(data[3])]
     game.player = Player(costume, game.menu_windows[0].content[int(data[4])])
