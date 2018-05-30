@@ -81,7 +81,7 @@ class Mixture(Upgrade):
             self.load_info_label_text()
 
     def get_text(self):
-        return str(self.adds_per_second) + "/sec \n" + str(self.damage) + " dmg"
+        return str(self.adds_per_second) + "/sec\n" + str(self.damage) + " dmg"
 
 
 class Costume(Upgrade):
