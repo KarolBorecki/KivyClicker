@@ -2,7 +2,7 @@ from kivy.uix.button import Button
 
 
 class Upgrade(Button):
-    def __init__(self, name, price, text, **kwargs):
+    def __init__(self, name, price, **kwargs):
         super(Upgrade, self).__init__(**kwargs)
         self.name = name
         self.primary_price = price
@@ -10,7 +10,7 @@ class Upgrade(Button):
         self.img.source = self.load_img_src()
         self.info_label.markup = True
         self.name_label.text = name
-        self.load_info_label_text(text)
+        self.load_info_label_text()
 
     def reset(self):
         self.price = self.primary_price
@@ -19,17 +19,20 @@ class Upgrade(Button):
     def load_img_src(self):
         return "img/upgrades/" + self.name + ".png"
 
-    def load_info_label_text(self, text):
-        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n" + str(text)
+    def load_info_label_text(self):
+        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n" + str(self.get_text())
+
+    def get_text(self):
+        return ""
 
 
 class Weapon(Upgrade):
     def __init__(self, number, damage, name, price, is_bought, **kwargs):
-        super(Weapon, self).__init__(name, price, str(damage) + " dmg", **kwargs)
         self.number = number
         self.damage = damage
         self.disabled = is_bought
         self.bind(on_press=self.on_click)
+        super(Weapon, self).__init__(name, price, **kwargs)
 
     def on_click(self, instance):
         game = self.parent.parent.parent.parent.parent
@@ -38,37 +41,46 @@ class Weapon(Upgrade):
             if game.player.weapon.damage < self.damage:
                 game.player.change_weapon(self)
 
+    def get_text(self):
+        return str(self.damage) + "dmg"
+
 
 class Armor(Upgrade):
     def __init__(self, adds_per_second, name, price, is_bought, **kwargs):
-        super(Armor, self).__init__(name, price, str(adds_per_second) + " /sec", **kwargs)
         self.adds_per_second = adds_per_second
         self.disabled = is_bought
         self.bind(on_press=self.on_click)
+        super(Armor, self).__init__(name, price, **kwargs)
 
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(0, self.adds_per_second, self.price):
             self.disabled = True
 
+    def get_text(self):
+        return str(self.adds_per_second) + "/sec"
+
 
 class Mixture(Upgrade):
     def __init__(self, adds_per_second, damage, name, price, count, **kwargs):
-        super(Mixture, self).__init__(name, price, str(adds_per_second) + "/sec " + str(damage) + " dmg", **kwargs)
         self.adds_per_second = adds_per_second
         self.damage = damage
         self.count = count
         self.bind(on_press=self.on_click)
+        super(Mixture, self).__init__(name, price, **kwargs)
 
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(self.damage, self.adds_per_second, self.price):
             self.count += 1
             self.price *= self.count + 1
-            self.load_info_label_text(str(self.adds_per_second) + "/sec " + str(self.damage) + " dmg")
+            self.load_info_label_text()
+
+    def get_text(self):
+        return str(self.adds_per_second) + "/sec " + str(self.damage) + "dmg"
 
 
 class Costume(Upgrade):
     def __init__(self, number, name, price, is_bought, **kwargs):
-        super(Costume, self).__init__(name, price, "", **kwargs)
+        super(Costume, self).__init__(name, price, **kwargs)
         self.number = number
         self.is_bought = is_bought
         self.bind(on_press=self.on_click)
