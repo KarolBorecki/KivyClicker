@@ -20,7 +20,7 @@ class Upgrade(Button):
         return "img/upgrades/" + self.name + ".png"
 
     def load_info_label_text(self):
-        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n" + str(self.get_text())
+        self.info_label.text = self.info_label.set_text(self.price) + "\n" + str(self.get_text())
 
     def get_text(self):
         return ""
@@ -31,8 +31,10 @@ class Weapon(Upgrade):
         self.number = number
         self.damage = damage
         self.disabled = is_bought
-        self.bind(on_press=self.on_click)
+
         super(Weapon, self).__init__(name, price, **kwargs)
+
+        self.bind(on_press=self.on_click)
 
     def on_click(self, instance):
         game = self.parent.parent.parent.parent.parent
@@ -49,8 +51,10 @@ class Armor(Upgrade):
     def __init__(self, adds_per_second, name, price, is_bought, **kwargs):
         self.adds_per_second = adds_per_second
         self.disabled = is_bought
-        self.bind(on_press=self.on_click)
+
         super(Armor, self).__init__(name, price, **kwargs)
+
+        self.bind(on_press=self.on_click)
 
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(0, self.adds_per_second, self.price):
@@ -65,8 +69,10 @@ class Mixture(Upgrade):
         self.adds_per_second = adds_per_second
         self.damage = damage
         self.count = count
-        self.bind(on_press=self.on_click)
+
         super(Mixture, self).__init__(name, price, **kwargs)
+
+        self.bind(on_press=self.on_click)
 
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(self.damage, self.adds_per_second, self.price):
@@ -75,7 +81,7 @@ class Mixture(Upgrade):
             self.load_info_label_text()
 
     def get_text(self):
-        return str(self.adds_per_second) + "/sec " + str(self.damage) + "dmg"
+        return str(self.adds_per_second) + "/sec \n" + str(self.damage) + " dmg"
 
 
 class Costume(Upgrade):
