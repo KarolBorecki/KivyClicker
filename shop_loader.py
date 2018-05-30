@@ -48,9 +48,11 @@ mixture_per_seconds = [5, 10, 15, 3,
 
 
 costume_names = ["Default", "Yellow", "Fighter", "Grandfather",
-                 "Pirate"]
+                 "Pirate", "Dwarf", "Irishman", "Knight",
+                 "Wizard", "Red"]
 costume_prices = [0, 20000, 100000, 500000,
-                  1000000]
+                  1000000, 1000000, 1000000, 1000000,
+                  1000000, 1000000]
 
 
 def read_counts_from_file(file_name):
