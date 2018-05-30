@@ -74,7 +74,7 @@ class ArenaWindow(PopupWindow):
             self.buy_btn.text = "Set"
         if not self.current_arena.is_bought:
             self.buy_btn.disabled = False
-            self.buy_btn.text = money_label.set_upgrade_text(self.current_arena.price)
+            self.buy_btn.text = money_label.set_text(self.current_arena.price)
             self.arena_img.source = "img/arena/icons/na.png"
         else:
             self.arena_img.source = self.current_arena.load_ico_source()

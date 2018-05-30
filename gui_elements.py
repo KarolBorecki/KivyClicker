@@ -128,17 +128,3 @@ class MoneyLabel(Label):
 
         else:
             return str(round(price, self.round_places)) + "$"
-
-    @staticmethod
-    def set_upgrade_text(price):
-        if price >= 1000000000:
-            return str(int(price / 1000000000)) + "mld"
-
-        elif price >= 1000000:
-            return str(int(price / 1000000)) + "mln"
-
-        elif price >= 1000:
-            return str(int(price / 1000)) + "tys"
-
-        else:
-            return str(int(price))
