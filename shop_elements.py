@@ -10,7 +10,7 @@ class Upgrade(Button):
         self.img.source = self.load_img_src()
         self.info_label.markup = True
         self.name_label.text = name
-        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n" + str(text)
+        self.load_info_label_text(text)
 
     def reset(self):
         self.price = self.primary_price
@@ -18,6 +18,9 @@ class Upgrade(Button):
 
     def load_img_src(self):
         return "img/upgrades/" + self.name + ".png"
+
+    def load_info_label_text(self, text):
+        self.info_label.text = self.info_label.set_upgrade_text(self.price) + "\n" + str(text)
 
 
 class Weapon(Upgrade):
@@ -60,7 +63,7 @@ class Potion(Upgrade):
         if self.parent.parent.parent.parent.parent.buy(self.damage, self.adds_per_second, self.price):
             self.count += 1
             self.price *= self.count + 1
-            self.load_text(self.get_text())
+            self.load_info_label_text(str(self.adds_per_second) + "/sec " + str(self.damage) + " dmg")
 
 
 class Costume(Upgrade):
