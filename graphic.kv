@@ -20,8 +20,8 @@
 
     Image:
         id: weapon
-        pos_hint: {'center_x': .85, 'center_y': .5}
-        size_hint_y: .35
+        pos_hint: {'center_x': .85, 'center_y': .55}
+        size_hint_y: .45
 
         canvas.before:
             PushMatrix
@@ -40,6 +40,8 @@
 
 <Upgrade>:
     name_label: name_label
+    buy_label: buy_label
+    info_layout: info_layout
     img: img
     info_label: info_label
 
@@ -54,24 +56,33 @@
         pos: root.pos
         size: root.size
         cols: 1
-        spacing: 15
         size_hint_y: None
 
         Label:
             id: name_label
-            font_size: Window.height * 1 / 40
+            font_size: Window.height * 1 / 50
 
         GridLayout:
+            id: info_layout
             cols: 2
             spacing: 1
 
             Image:
                 id: img
+                size_hint_y: .5
 
-            MoneyLabel:
-                id: info_label
-                halign: "center"
-                font_size: Window.height * 1 / 35
+            GridLayout:
+                cols: 1
+
+                MoneyLabel:
+                    id: buy_label
+                    halign: "center"
+                    font_size: Window.height * 1 / 35
+
+                Label:
+                    id: info_label
+                    halign: "center"
+                    font_size: Window.height * 1 / 35
 
 <ExitButton@Button>:
     border: (0,0,0,0)

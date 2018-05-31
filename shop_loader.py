@@ -6,8 +6,8 @@ weapon_names = ["Wooden sword", "Iron dagger", "Rusty sword", "Iron sword", "Lon
                 "stacked silver sword", "grassy-heart sword", "Ruby sword", "Stacked sword", "Obsidian sword"]
 weapon_prices = [0, 200, 500, 800, 1000, 1500, 2000, 4000, 8000, 10000, 20000, 50000, 100000, 150000,
                  300000, 800000, 2000000, 5000000, 10000000, 15000000]
-weapon_damage = [1, 3, 5, 7, 10, 13, 10, 13, 15, 20, 24, 30, 40, 51, 63,
-                 70, 80, 90, 97, 100]
+weapon_damage = [1, 3, 5, 7, 10, 13, 15, 20, 24, 30, 40, 51, 63,
+                 70, 80, 90, 97, 100, 107, 115]
 
 
 armor_names = ["Light iron helmet", "Light golden helmet", "Light diamond helmet",
@@ -46,8 +46,7 @@ mixture_damage = [1, 1.5, 1, 4,
 mixture_per_seconds = [5, 10, 15, 3,
                        10, 15, 15, 20]
 
-
-costume_names = ["Default", "Yellow", "Fighter", "Grandfather",
+costume_names = ["Green", "Yellow", "Fighter", "Grandfather",
                  "Pirate", "Dwarf", "Irishman", "Knight",
                  "Wizard", "Red"]
 costume_prices = [0, 20000, 1000000, 1000000,
@@ -70,11 +69,12 @@ def load_weapon():
     prices = weapon_prices
     damage = weapon_damage
     counts = read_counts_from_file("saves/weapon_save.txt")
+    use_left = read_counts_from_file("saves/weapon_use_left.txt")
 
     weapon = []
     i = 0
     while i < len(names):
-        weapon.append(Weapon(i, int(damage[i]), str(names[i]), float(prices[i]), int(counts[i])))
+        weapon.append(Weapon(i, int(damage[i]), str(names[i]), float(prices[i]), int(use_left[i]), int(counts[i])))
         i += 1
 
     return weapon

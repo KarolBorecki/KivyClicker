@@ -51,8 +51,13 @@ def save_game(game):
 
     weapon_save_file = open("saves/weapon_save.txt", "w")
     for weapon in game.menu_windows[0].content:
-        weapon_save_file.write(str(int(weapon.disabled)) + "\n")
+        weapon_save_file.write(str(int(weapon.is_bought)) + "\n")
     weapon_save_file.close()
+
+    weapon_use_left_file = open("saves/weapon_use_left.txt", "w")
+    for weapon in game.menu_windows[0].content:
+        weapon_use_left_file.write(str(int(weapon.use_left)) + "\n")
+    weapon_use_left_file.close()
 
     armor_save_file = open("saves/armor_save.txt", "w")
     for armor in game.menu_windows[1].content:
@@ -88,8 +93,10 @@ def load_game(game):
                          ShopWindow("Alchemy", load_mixture()), ShopWindow("Costumes", load_costumes()),
                          ArenaWindow(game)]
     costume = game.menu_windows[3].content[int(data[3])]
-    game.player = Player(costume, game.menu_windows[0].content[int(data[4])])
+    weapon = game.menu_windows[0].content[int(data[4])]
+    game.player = Player(costume, weapon)
     costume.on_set(game)
+    weapon.on_set(game)
     game.add_widget(game.player)
     game.background.source = game.current_arena.load_background_source()
     game.spawn_monster()

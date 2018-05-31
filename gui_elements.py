@@ -14,8 +14,6 @@ from kivy.uix.label import Label
 class Player(FloatLayout):
     angle = NumericProperty(0)
 
-    attack_sound = SoundLoader.load('sounds/player_attack.wav')
-
     def __init__(self, costume, weapon, **kwargs):
         super(Player, self).__init__(**kwargs)
         self.costume = costume
@@ -24,10 +22,10 @@ class Player(FloatLayout):
         self.load_img()
 
     def attack(self, monster):
-        self.attack_sound.play()
         self.parent.add_widget(DisappearingImage("img/effects/dust.gif", {'center_x': .5, 'center_y': .5}, (.6, .6)))
         anim = Animation(angle=-90, duration=0.05) + Animation(angle=0, duration=0.1)
         anim.start(self)
+        self.weapon.use_left -= 1
         monster.get_dmg(self.weapon.damage)
 
     def change_weapon(self, weapon):
@@ -113,7 +111,7 @@ class DisappearingLabel(Label):
         self.parent.remove_widget(self)
 
 
-class MoneyLabel(Label):
+class MoneyLabel(ButtonBehavior, Label):
     def __init__(self, round_places=1, **kwargs):
         super(MoneyLabel, self).__init__(**kwargs)
         self.round_places = round_places

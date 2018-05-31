@@ -10,7 +10,7 @@ class Upgrade(Button):
         self.img.source = self.load_img_src()
         self.info_label.markup = True
         self.name_label.text = name
-        self.load_info_label_text()
+        self.load_label_text()
 
     def reset(self):
         self.price = self.primary_price
@@ -19,32 +19,64 @@ class Upgrade(Button):
     def load_img_src(self):
         return "img/upgrades/" + self.name + ".png"
 
-    def load_info_label_text(self):
-        self.info_label.text = self.info_label.set_text(self.price) + "\n" + str(self.get_text())
+    def load_label_text(self):
+        self.buy_label.text = self.buy_label.set_text(self.price)
+        self.info_label.text = self.get_text()
 
     def get_text(self):
         return ""
 
 
 class Weapon(Upgrade):
-    def __init__(self, number, damage, name, price, is_bought, **kwargs):
+    def __init__(self, number, damage, name, price, use_left, is_bought, **kwargs):
         self.number = number
         self.damage = damage
-        self.disabled = is_bought
+        self.use_left = use_left
+        self.is_bought = is_bought
+
+        self.repair_price = price / 4
 
         super(Weapon, self).__init__(name, price, **kwargs)
+
+        if is_bought:
+            self.set_text()
 
         self.bind(on_press=self.on_click)
 
     def on_click(self, instance):
-        game = self.parent.parent.parent.parent.parent
-        if game.buy(0, 0, self.price):
-            self.disabled = True
-            if game.player.weapon.damage < self.damage:
-                game.player.change_weapon(self)
+        parent = self.parent.parent.parent.parent.parent
+        if parent.buy(0, 0, self.price):
+            self.on_buy(parent)
 
     def get_text(self):
         return str(self.damage) + "dmg"
+
+    def on_buy(self, parent):
+        self.set_text()
+        self.on_set(parent)
+        self.is_bought = True
+
+    def on_set(self, parent):
+        parent.player.weapon.disabled = False
+        self.disabled = True
+
+        parent.player.change_weapon(self)
+        if self.is_bought == 1:
+            parent.weapon_change_sound.play()
+
+    def set_text(self):
+        if self.use_left > 0:
+            self.buy_label.text = str(self.use_left) + " use"
+            self.buy_label.on_press = None
+        else:
+            self.buy_label.disabled = False
+            self.buy_label.text = "Repair"
+            self.buy_label.on_press = self.repair
+
+    def repair(self):
+        if self.parent.parent.parent.parent.parent.buy(0, 0, self.repair_price):
+            self.use_left = 800
+            self.set_text()
 
 
 class Armor(Upgrade):
@@ -77,8 +109,8 @@ class Mixture(Upgrade):
     def on_click(self, instance):
         if self.parent.parent.parent.parent.parent.buy(self.damage, self.adds_per_second, self.price):
             self.count += 1
-            self.price *= self.count + 1
-            self.load_info_label_text()
+            self.price *= self.count
+            self.load_label_text()
 
     def get_text(self):
         return str(self.adds_per_second) + "/sec\n" + str(self.damage) + " dmg"
