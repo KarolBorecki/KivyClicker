@@ -62,10 +62,15 @@ class ArenaWindow(PopupWindow):
             self.refresh(self.parent)
 
     def refresh(self, parent):
-        money_label = MoneyLabel()
         self.current_arena = parent.arena[self.current_arena_number]
         self.header.text = self.current_arena.name
 
+        self.set_buy_button(parent)
+        self.load_info_label_text()
+        self.set_switch_buttons(parent)
+
+    def set_buy_button(self, parent):
+        money_label = MoneyLabel()
         if self.current_arena.is_bought and self.current_arena.number == parent.current_arena.number:
             self.buy_btn.disabled = True
             self.buy_btn.text = "Set"
@@ -79,9 +84,7 @@ class ArenaWindow(PopupWindow):
         else:
             self.arena_img.source = self.current_arena.load_ico_source()
 
-        self.info_label.text = "per click: " + str(self.current_arena.per_click) + "$\n\nKill bonus: " + str(
-            self.current_arena.kill_bonus) + "$"
-
+    def set_switch_buttons(self, parent):
         if self.current_arena_number == 0:
             self.previous_btn.disabled = True
         else:
@@ -91,3 +94,7 @@ class ArenaWindow(PopupWindow):
             self.next_btn.disabled = True
         else:
             self.next_btn.disabled = False
+
+    def load_info_label_text(self):
+        self.info_label.text = "per click: " + str(self.current_arena.per_click) + "$\n\nKill bonus: " + str(
+            self.current_arena.kill_bonus) + "$"

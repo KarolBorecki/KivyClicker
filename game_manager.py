@@ -88,4 +88,4 @@ class GameManager(FloatLayout):
 
     def game_status(self):
         print(["Money: " + str(self.money), " Per click: " + str(self.per_click), " Per sec: " + str(self.per_sec),
-                "Current Arena: " + str(self.current_arena.name), "Current Monster: " + str(self.current_monster.name)])
+               "Current Arena: " + str(self.current_arena.name), "Current Monster: " + str(self.current_monster.name)])
