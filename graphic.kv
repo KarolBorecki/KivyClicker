@@ -20,15 +20,15 @@
 
     Image:
         id: weapon
-        pos_hint: {'center_x': .85, 'center_y': .35}
-        size_hint_y: .15
+        pos_hint: {'center_x': .85, 'center_y': .5}
+        size_hint_y: .35
 
         canvas.before:
             PushMatrix
             Rotate:
                 angle: root.angle
                 axis: 0, 0, 1
-                origin: self.pos
+                origin: self.center
 
         canvas.after:
             PopMatrix
