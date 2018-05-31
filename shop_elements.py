@@ -38,7 +38,7 @@ class Weapon(Upgrade):
 
     def on_click(self, instance):
         game = self.parent.parent.parent.parent.parent
-        if game.buy(self.damage, 0, self.price):
+        if game.buy(0, 0, self.price):
             self.disabled = True
             if game.player.weapon.damage < self.damage:
                 game.player.change_weapon(self)
