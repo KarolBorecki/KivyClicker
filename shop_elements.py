@@ -70,10 +70,9 @@ class Weapon(Upgrade):
     def set_text(self):
         self.buy_label.text = "SET"
 
-    def repair(self):
-        if self.parent.parent.parent.parent.parent.buy(0, 0, self.repair_price):
+    def repair(self, game):
+        if game.buy(0, 0, self.repair_price):
             self.use_left = 800
-            self.set_text()
 
 
 class Armor(Upgrade):

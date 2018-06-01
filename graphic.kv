@@ -236,6 +236,7 @@
                 text: "repair"
 
 <WorkshopWindow>:
+    weapon_info: weapon_info
     FloatLayout:
         id: scheme
         size_hint: (.9, .9)
@@ -275,7 +276,7 @@
 
                         Label:
                             font_size: Window.height * 1 / 40
-                            text: "Health: 100\nStrength: 2"
+                            text: "Health: SOON\nStrength: SOON"
 
                         BoxLayout:
                             orientation: 'horizontal'
@@ -285,14 +286,14 @@
                                 background_normal: "img/upgrade_background.png"
                                 background_down: "img/upgrade_background.png"
                                 font_size: Window.height * 1 / 60
-                                text: "upgrade"
+                                text: "SOON"
                                 size_hint_y: .6
 
                             Button:
                                 background_normal: "img/upgrade_background.png"
                                 background_down: "img/upgrade_background.png"
                                 font_size: Window.height * 1 / 60
-                                text: "repair"
+                                text: "SOON"
                                 size_hint_y: .6
 
 
@@ -315,8 +316,8 @@
                         orientation: 'vertical'
 
                         Label:
+                            id: weapon_info
                             font_size: Window.height * 1 / 40
-                            text: "Damage: 1\nUse left: 567\nLevel: 1"
 
                         BoxLayout:
                             orientation: 'horizontal'
@@ -326,7 +327,7 @@
                                 background_normal: "img/upgrade_background.png"
                                 background_down: "img/upgrade_background.png"
                                 font_size: Window.height * 1 / 60
-                                text: "upgrade"
+                                text: "SOON"
                                 size_hint_y: .6
 
                             Button:
@@ -335,6 +336,8 @@
                                 font_size: Window.height * 1 / 60
                                 text: "repair"
                                 size_hint_y: .6
+
+                                on_press: root.repair()
 
 
 

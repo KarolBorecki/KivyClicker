@@ -74,7 +74,9 @@ class GameManager(FloatLayout):
 
         if self.current_menu_window is not None:
             self.remove_widget(self.menu_windows[self.current_menu_window])
-        self.add_widget(self.menu_windows[menu_option])
+        window = self.menu_windows[menu_option]
+        self.add_widget(window)
+        window.on_open()
         self.current_menu_window = menu_option
         self.is_active = False
 

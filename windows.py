@@ -1,4 +1,3 @@
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.scrollview import ScrollView
 
@@ -17,6 +16,9 @@ class ShopContent(ScrollView):
 class PopupWindow(FloatLayout):
     def __init__(self, **kwargs):
         super(FloatLayout, self).__init__(**kwargs)
+
+    def on_open(self):
+        pass
 
 
 class ShopWindow(PopupWindow):
@@ -102,10 +104,18 @@ class ArenaWindow(PopupWindow):
 
 
 class WorkshopWindow(PopupWindow):
-    def __init__(self, **kwargs):
+    def __init__(self, game, **kwargs):
         super(PopupWindow, self).__init__(**kwargs)
+        self.game = game
+        self.load_text()
 
+    def repair(self):
+        self.game.player.weapon.repair(self.game)
+        self.load_text()
 
-class WorkshopInfoCard(BoxLayout):
-    def __init__(self, **kwargs):
-        super(BoxLayout, self).__init__(**kwargs)
+    def on_open(self):
+        self.load_text()
+
+    def load_text(self):
+        self.weapon_info.text = "Damage: " + str(self.game.player.weapon.damage) + "\nUse left: " + str(
+            self.game.player.weapon.use_left)
