@@ -1,3 +1,4 @@
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.scrollview import ScrollView
 
@@ -98,3 +99,13 @@ class ArenaWindow(PopupWindow):
     def load_info_label_text(self):
         self.info_label.text = "per click: " + str(self.current_arena.per_click) + "$\n\nKill bonus: " + str(
             self.current_arena.kill_bonus) + "$"
+
+
+class WorkshopWindow(PopupWindow):
+    def __init__(self, **kwargs):
+        super(PopupWindow, self).__init__(**kwargs)
+
+
+class WorkshopInfoCard(BoxLayout):
+    def __init__(self, **kwargs):
+        super(BoxLayout, self).__init__(**kwargs)

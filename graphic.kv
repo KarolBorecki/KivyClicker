@@ -65,7 +65,6 @@
         GridLayout:
             id: info_layout
             cols: 2
-            spacing: 1
 
             Image:
                 id: img
@@ -77,12 +76,12 @@
                 MoneyLabel:
                     id: buy_label
                     halign: "center"
-                    font_size: Window.height * 1 / 35
+                    font_size: Window.height * 1 / 40
 
                 Label:
                     id: info_label
                     halign: "center"
-                    font_size: Window.height * 1 / 35
+                    font_size: Window.height * 1 / 40
 
 <ExitButton@Button>:
     border: (0,0,0,0)
@@ -212,6 +211,133 @@
 
                 on_press: root.change_arena(1)
 
+<WorkshopInfoCard>:
+    orientation: 'horizontal'
+
+    Image:
+        source: ""
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: "NAME"
+
+        Label:
+            text: "NAME"
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: "upgrade"
+
+            Button:
+                text: "repair"
+
+<WorkshopWindow>:
+    FloatLayout:
+        id: scheme
+        size_hint: (.9, .9)
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+        Label:
+            id: header
+            pos_hint: {'center_x': .5, 'center_y': .95}
+            size_hint: (1, .1)
+
+            font_size: Window.height * 1 / 16
+            text: "Workshop"
+
+        BoxLayout:
+            size_hint: (.9, .9)
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            orientation: 'vertical'
+            spacing: 20
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: .5
+
+                Label:
+                    id: header
+
+                    font_size: Window.height * 1 / 20
+                    text: "Costume"
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Image:
+                        source: "img/upgrades/green.png"
+                    BoxLayout:
+                        orientation: 'vertical'
+
+                        Label:
+                            font_size: Window.height * 1 / 40
+                            text: "Health: 100\nStrength: 2"
+
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            spacing: 5
+
+                            Button:
+                                background_normal: "img/upgrade_background.png"
+                                background_down: "img/upgrade_background.png"
+                                font_size: Window.height * 1 / 60
+                                text: "upgrade"
+                                size_hint_y: .6
+
+                            Button:
+                                background_normal: "img/upgrade_background.png"
+                                background_down: "img/upgrade_background.png"
+                                font_size: Window.height * 1 / 60
+                                text: "repair"
+                                size_hint_y: .6
+
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: .5
+
+                Label:
+                    id: header
+
+                    font_size: Window.height * 1 / 20
+                    text: "Sword"
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Image:
+                        source: "img/upgrades/wooden sword.png"
+                    BoxLayout:
+                        orientation: 'vertical'
+
+                        Label:
+                            font_size: Window.height * 1 / 40
+                            text: "Damage: 1\nUse left: 567\nLevel: 1"
+
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            spacing: 5
+
+                            Button:
+                                background_normal: "img/upgrade_background.png"
+                                background_down: "img/upgrade_background.png"
+                                font_size: Window.height * 1 / 60
+                                text: "upgrade"
+                                size_hint_y: .6
+
+                            Button:
+                                background_normal: "img/upgrade_background.png"
+                                background_down: "img/upgrade_background.png"
+                                font_size: Window.height * 1 / 60
+                                text: "repair"
+                                size_hint_y: .6
+
+
+
 <MenuButton>:
     size_hint: (.2, None)
     height: self.width
@@ -262,5 +388,11 @@
             pos_hint: {'top': 1, 'x': 0}
             on_press: root.open_window(4)
             source: "img/icons/arena_ico.png"
+
+        MenuButton:
+            id: workshop_btn
+            pos_hint: {'top': 1, 'right': 1}
+            on_press: root.open_window(5)
+            source: "img/icons/workshop_ico.png"
 
 

@@ -34,7 +34,7 @@ class Weapon(Upgrade):
         self.use_left = use_left
         self.is_bought = is_bought
 
-        self.repair_price = price / 4
+        self.repair_price = int(price / 4)
 
         super(Weapon, self).__init__(name, price, **kwargs)
 
@@ -45,8 +45,11 @@ class Weapon(Upgrade):
 
     def on_click(self, instance):
         parent = self.parent.parent.parent.parent.parent
-        if parent.buy(0, 0, self.price):
-            self.on_buy(parent)
+        if not self.is_bought:
+            if parent.buy(0, 0, self.price):
+                self.on_buy(parent)
+        else:
+            self.on_set(parent)
 
     def get_text(self):
         return str(self.damage) + "dmg"
@@ -65,13 +68,7 @@ class Weapon(Upgrade):
             parent.weapon_change_sound.play()
 
     def set_text(self):
-        if self.use_left > 0:
-            self.buy_label.text = str(self.use_left) + " use"
-            self.buy_label.on_press = None
-        else:
-            self.buy_label.disabled = False
-            self.buy_label.text = "Repair"
-            self.buy_label.on_press = self.repair
+        self.buy_label.text = "SET"
 
     def repair(self):
         if self.parent.parent.parent.parent.parent.buy(0, 0, self.repair_price):
