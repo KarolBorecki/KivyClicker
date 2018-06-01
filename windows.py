@@ -109,7 +109,14 @@ class WorkshopWindow(PopupWindow):
         self.game = game
         self.load_text()
 
-    def repair(self):
+        self.costume_card.btn1.text = "?"
+        self.costume_card.btn2.text = "?"
+
+        self.weapon_card.btn1.text = "?"
+        self.weapon_card.btn2.text = "Repair"
+        self.weapon_card.btn2.bind(on_press=self.repair)
+
+    def repair(self, instance):
         self.game.player.weapon.repair(self.game)
         self.load_text()
 
@@ -117,5 +124,11 @@ class WorkshopWindow(PopupWindow):
         self.load_text()
 
     def load_text(self):
-        self.weapon_info.text = "Damage: " + str(self.game.player.weapon.damage) + "\nUse left: " + str(
-            self.game.player.weapon.use_left)
+        self.costume_card.card_header.text = "Costume"
+        self.costume_card.info_label.text = "Health: ?\nStrength: ?\nLevel: ?"
+        self.costume_card.img.source = self.game.player.player_img.source
+
+        self.weapon_card.card_header.text = "Sword"
+        self.weapon_card.info_label.text = "Damage: " + str(self.game.player.weapon.damage) + "\nUse left: " + str(
+            self.game.player.weapon.use_left) + "\nLevel: ?"
+        self.weapon_card.img.source = self.game.player.weapon_img.source

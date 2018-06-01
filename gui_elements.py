@@ -18,7 +18,6 @@ class Player(FloatLayout):
         super(Player, self).__init__(**kwargs)
         self.costume = costume
         self.weapon = weapon
-        self.weapon_img.source = self.weapon.load_img_src()
         self.load_img()
 
     def attack(self, monster):
@@ -38,6 +37,7 @@ class Player(FloatLayout):
             item.angle = 0
 
     def load_img(self):
+        self.weapon_img.source = self.weapon.load_img_src()
         self.player_img.source = self.costume.load_img_src()
 
 

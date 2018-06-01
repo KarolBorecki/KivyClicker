@@ -211,39 +211,60 @@
 
                 on_press: root.change_arena(1)
 
-<WorkshopInfoCard>:
-    orientation: 'horizontal'
+<CardButton@Button>:
+    background_normal: "img/upgrade_background.png"
+    background_down: "img/upgrade_background.png"
+    font_size: Window.height * 1 / 60
+    size_hint_y: .6
 
-    Image:
-        source: ""
+<WorkshopInfoCard@BoxLayout>:
+    img: img
+    card_header: card_header
+    info_label: info_label
+    btn1: btn1
+    btn2: btn2
+
+    orientation: 'vertical'
+    size_hint_y: .5
+
+    Label:
+        id: card_header
+        font_size: Window.height * 1 / 20
 
     BoxLayout:
-        orientation: 'vertical'
+        id: weapon_info
+        orientation: 'horizontal'
 
-        Label:
-            text: "NAME"
-
-        Label:
-            text: "NAME"
+        Image:
+            id: img
 
         BoxLayout:
-            orientation: 'horizontal'
+            orientation: 'vertical'
 
-            Button:
-                text: "upgrade"
+            Label:
+                id: info_label
+                font_size: Window.height * 1 / 40
 
-            Button:
-                text: "repair"
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 5
+
+                CardButton:
+                    id: btn1
+
+                CardButton:
+                    id: btn2
 
 <WorkshopWindow>:
-    weapon_info: weapon_info
+    costume_card: costume_card
+    weapon_card: weapon_card
+
     FloatLayout:
         id: scheme
         size_hint: (.9, .9)
         pos_hint: {'center_x': .5, 'center_y': .5}
 
         Label:
-            id: header
             pos_hint: {'center_x': .5, 'center_y': .95}
             size_hint: (1, .1)
 
@@ -256,90 +277,11 @@
             orientation: 'vertical'
             spacing: 20
 
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint_y: .5
+            WorkshopInfoCard:
+                id: costume_card
 
-                Label:
-                    id: header
-
-                    font_size: Window.height * 1 / 20
-                    text: "Costume"
-
-                BoxLayout:
-                    orientation: 'horizontal'
-
-                    Image:
-                        source: "img/upgrades/green.png"
-                    BoxLayout:
-                        orientation: 'vertical'
-
-                        Label:
-                            font_size: Window.height * 1 / 40
-                            text: "Health: SOON\nStrength: SOON"
-
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            spacing: 5
-
-                            Button:
-                                background_normal: "img/upgrade_background.png"
-                                background_down: "img/upgrade_background.png"
-                                font_size: Window.height * 1 / 60
-                                text: "SOON"
-                                size_hint_y: .6
-
-                            Button:
-                                background_normal: "img/upgrade_background.png"
-                                background_down: "img/upgrade_background.png"
-                                font_size: Window.height * 1 / 60
-                                text: "SOON"
-                                size_hint_y: .6
-
-
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint_y: .5
-
-                Label:
-                    id: header
-
-                    font_size: Window.height * 1 / 20
-                    text: "Sword"
-
-                BoxLayout:
-                    orientation: 'horizontal'
-
-                    Image:
-                        source: "img/upgrades/wooden sword.png"
-                    BoxLayout:
-                        orientation: 'vertical'
-
-                        Label:
-                            id: weapon_info
-                            font_size: Window.height * 1 / 40
-
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            spacing: 5
-
-                            Button:
-                                background_normal: "img/upgrade_background.png"
-                                background_down: "img/upgrade_background.png"
-                                font_size: Window.height * 1 / 60
-                                text: "SOON"
-                                size_hint_y: .6
-
-                            Button:
-                                background_normal: "img/upgrade_background.png"
-                                background_down: "img/upgrade_background.png"
-                                font_size: Window.height * 1 / 60
-                                text: "repair"
-                                size_hint_y: .6
-
-                                on_press: root.repair()
-
-
+            WorkshopInfoCard:
+                id: weapon_card
 
 <MenuButton>:
     size_hint: (.2, None)
