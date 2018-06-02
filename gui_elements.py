@@ -90,18 +90,20 @@ class DisappearingImage(Image):
 
 
 class DisappearingLabel(Label):
-    def __init__(self, text, pos=None, font_size=None, duration=0.4, **kwargs):
+    def __init__(self, text, pos_hint=None, pos=None, font_size=None, duration=0.4, **kwargs):
         super(DisappearingLabel, self).__init__(**kwargs)
-
-        if pos is None:
-            pos = {'center_x': .5}
 
         if font_size is None:
             font_size = 25
 
+        if pos_hint is not None:
+            self.pos_hint = pos_hint
+
+        if pos is not None:
+            self.pos = pos
+
         self.text = text
         self.font_size = font_size
-        self.pos_hint = pos
         self.center_y = Window.height / 2 * -1 + 100
         anim = Animation(y=Window.height / 2 * -1 + 200, duration=duration)
         anim.start(self)

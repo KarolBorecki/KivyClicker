@@ -1,3 +1,5 @@
+from random import randint
+
 from kivy.core.audio import SoundLoader
 from kivy.properties import NumericProperty, ObjectProperty, Clock
 from kivy.uix.floatlayout import FloatLayout
@@ -36,8 +38,13 @@ class GameManager(FloatLayout):
         super(GameManager, self).__init__(**kwargs)
         Clock.schedule_interval(self.add_per_second, 1.0)
 
+    def add_money(self, amount):
+        label_pos = {"center_x": randint(20, 80) / 100, "center_y": randint(20, 80) / 100}
+        self.add_widget(DisappearingLabel("+" + str(amount) + "$", pos_hint=label_pos, font_size=30, duration=0.5))
+        self.money += amount
+
     def add_per_second(self, dt):
-        self.money += self.per_sec
+        self.add_money(self.per_sec)
 
     def on_touch_down(self, touch):
         if self.is_active:
@@ -46,7 +53,7 @@ class GameManager(FloatLayout):
             else:
                 self.add_widget(DisappearingLabel("Your broke a weapon!", duration=1))
             self.attack_sound.play()
-            self.money += self.per_click
+            self.add_money(self.per_click)
         super(GameManager, self).on_touch_down(touch)
 
     def spawn_monster(self):
