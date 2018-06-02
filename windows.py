@@ -50,19 +50,22 @@ class ArenaWindow(PopupWindow):
     def buy(self):
         if self.parent.buy(self.current_arena.per_click, 0, self.current_arena.price):
             self.current_arena.is_bought = True
-            self.refresh(self.parent)
+            self.set_area()
+
+    def set_area(self):
+        self.parent.current_arena = self.current_arena
+        self.parent.background.source = self.current_arena.load_background_source()
+        self.parent.remove_widget(self.parent.current_monster)
+        self.parent.spawn_monster()
+        self.parent.arena_change_sound.play()
+        self.parent.open_window(4)
+        self.refresh(self.parent)
 
     def on_set_click(self):
         if not self.current_arena.is_bought:
             self.buy()
         else:
-            self.parent.current_arena = self.current_arena
-            self.parent.background.source = self.current_arena.load_background_source()
-            self.parent.remove_widget(self.parent.current_monster)
-            self.parent.spawn_monster()
-            self.parent.arena_change_sound.play()
-            self.parent.open_window(4)
-            self.refresh(self.parent)
+            self.set_area()
 
     def refresh(self, parent):
         self.current_arena = parent.arena[self.current_arena_number]
@@ -107,7 +110,7 @@ class WorkshopWindow(PopupWindow):
     def __init__(self, game, **kwargs):
         super(PopupWindow, self).__init__(**kwargs)
         self.game = game
-        self.load_text()
+        self.load_info_labels_text()
 
         self.costume_card.btn1.text = "?"
         self.costume_card.btn2.text = "?"
@@ -118,12 +121,12 @@ class WorkshopWindow(PopupWindow):
 
     def repair(self, instance):
         self.game.player.weapon.repair(self.game)
-        self.load_text()
+        self.load_info_labels_text()
 
     def on_open(self):
-        self.load_text()
+        self.load_info_labels_text()
 
-    def load_text(self):
+    def load_info_labels_text(self):
         self.costume_card.card_header.text = "Costume"
         self.costume_card.info_label.text = "Health: ?\nStrength: ?\nLevel: ?"
         self.costume_card.img.source = self.game.player.player_img.source
