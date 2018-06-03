@@ -51,7 +51,7 @@ def save_game(game):
 
     weapon_save_file = open("saves/weapon_save.txt", "w")
     for weapon in game.menu_windows[0].content:
-        weapon_save_file.write(str(int(weapon.is_bought)) + "\n")
+        weapon_save_file.write(str(int(weapon.level)) + "\n")
     weapon_save_file.close()
 
     weapon_use_left_file = open("saves/weapon_use_left.txt", "w")

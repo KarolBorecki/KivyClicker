@@ -21,6 +21,9 @@ class Upgrade(Button):
 
     def load_label_text(self):
         self.buy_label.text = self.buy_label.set_text(self.price)
+        self.load_info_label_text()
+
+    def load_info_label_text(self):
         self.info_label.text = self.get_text()
 
     def get_text(self):
@@ -28,51 +31,73 @@ class Upgrade(Button):
 
 
 class Weapon(Upgrade):
-    def __init__(self, number, damage, name, price, use_left, is_bought, **kwargs):
+    def __init__(self, number, damage, name, price, use_left, level, **kwargs):
         self.number = number
         self.damage = damage
         self.use_left = use_left
-        self.is_bought = is_bought
-
-        self.repair_price = int(price / 4)
+        self.level = level
 
         super(Weapon, self).__init__(name, price, **kwargs)
 
-        if is_bought:
-            self.set_text()
+        self.repair_price = self.calculate_repair_price()
+        self.upgrade_price = self.calculate_upgrade_price()
 
+        self.check_level(level)
         self.bind(on_press=self.on_click)
+
+    def repair(self, game):
+        if game.buy(0, 0, self.repair_price):
+            self.use_left = 800
+
+    def upgrade(self, game):
+        if game.buy(0, 0, self.upgrade_price):
+            self.level += 1
+            self.repair_price = self.calculate_repair_price()
+            self.upgrade_price = self.calculate_upgrade_price()
+            self.check_level(self.level)
+            self.load_info_label_text()
+
+    def check_level(self, level):
+        if level > 0:
+            self.set_text()
+            i = level
+            while i > 0:
+                self.damage = round(self.damage * 1.2, 1)
+                i -= 1
+            self.load_info_label_text()
 
     def on_click(self, instance):
         parent = self.parent.parent.parent.parent.parent
-        if not self.is_bought:
+        if not self.level > 0:
             if parent.buy(0, 0, self.price):
                 self.on_buy(parent)
         else:
             self.on_set(parent)
 
-    def get_text(self):
-        return str(self.damage) + "dmg"
-
     def on_buy(self, parent):
+        self.level += 1
         self.set_text()
         self.on_set(parent)
-        self.is_bought = True
 
     def on_set(self, parent):
         parent.player.weapon.disabled = False
         self.disabled = True
 
         parent.player.change_weapon(self)
-        if self.is_bought == 1:
+        if self.level > 0:
             parent.weapon_change_sound.play()
+
+    def calculate_repair_price(self):
+        return int(self.price * (self.level + 1) / 2)
+
+    def calculate_upgrade_price(self):
+        return int(self.price * self.level * (self.level + 1))
 
     def set_text(self):
         self.buy_label.text = "SET"
 
-    def repair(self, game):
-        if game.buy(0, 0, self.repair_price):
-            self.use_left = 800
+    def get_text(self):
+        return str(self.damage) + "dmg"
 
 
 class Armor(Upgrade):

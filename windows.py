@@ -115,12 +115,17 @@ class WorkshopWindow(PopupWindow):
         self.costume_card.btn1.text = "?"
         self.costume_card.btn2.text = "?"
 
-        self.weapon_card.btn1.text = "?"
+        self.weapon_card.btn1.text = "Upgrade"
+        self.weapon_card.btn1.bind(on_press=self.upgrade_weapon)
         self.weapon_card.btn2.text = "Repair"
         self.weapon_card.btn2.bind(on_press=self.repair)
 
     def repair(self, instance):
         self.game.player.weapon.repair(self.game)
+        self.load_info_labels_text()
+
+    def upgrade_weapon(self, instance):
+        self.game.player.weapon.upgrade(self.game)
         self.load_info_labels_text()
 
     def on_open(self):
@@ -133,5 +138,5 @@ class WorkshopWindow(PopupWindow):
 
         self.weapon_card.card_header.text = "Sword"
         self.weapon_card.info_label.text = "Damage: " + str(self.game.player.weapon.damage) + "\nUse left: " + str(
-            self.game.player.weapon.use_left) + "\nLevel: ?"
+            self.game.player.weapon.use_left) + "\nLevel: " + str(int(self.game.player.weapon.level))
         self.weapon_card.img.source = self.game.player.weapon_img.source
