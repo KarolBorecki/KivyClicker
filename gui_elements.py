@@ -1,3 +1,5 @@
+from math import floor
+
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
@@ -131,4 +133,4 @@ class MoneyLabel(ButtonBehavior, Label):
 
     @staticmethod
     def round_price(price, rounding_amount):
-        return "%.1f" % (price / rounding_amount)
+        return str(floor(price / rounding_amount * 10) / 10)
