@@ -1,5 +1,3 @@
-from math import floor
-
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
@@ -118,16 +116,19 @@ class MoneyLabel(ButtonBehavior, Label):
         super(MoneyLabel, self).__init__(**kwargs)
         self.round_places = round_places
 
-    @staticmethod
-    def set_text(price):
+    def set_text(self, price):
         if price >= 1000000000:
-            return str(floor(price / 1000000000)) + "mld$"
+            return self.round_price(price, 1000000000) + "mld$"
 
         elif price >= 1000000:
-            return str(floor(price / 1000000)) + "mln$"
+            return self.round_price(price, 1000000) + "mln$"
 
         elif price >= 1000:
-            return str(floor(price / 1000)) + "tys$"
+            return self.round_price(price, 1000) + "tys$"
 
         else:
-            return str(floor(price)) + "$"
+            return self.round_price(price, 1) + "$"
+
+    @staticmethod
+    def round_price(price, rounding_amount):
+        return "%.1f" % (price / rounding_amount)

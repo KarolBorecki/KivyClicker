@@ -43,6 +43,7 @@ class GameManager(FloatLayout):
             label_pos = {"center_x": randint(20, 80) / 100, "center_y": randint(20, 80) / 100}
             self.add_widget(DisappearingLabel("+" + str(amount) + "$", pos_hint=label_pos, font_size=30, duration=0.5))
         self.money += amount
+        self.game_status()
 
     def add_per_second(self, dt):
         self.add_money(self.per_sec)

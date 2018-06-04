@@ -55,13 +55,12 @@ class Weapon(Upgrade):
             self.repair_price = self.calculate_repair_price()
             self.upgrade_price = self.calculate_upgrade_price()
             self.check_level(self.level)
-            self.load_info_label_text()
 
     def check_level(self, level):
         if level > 0:
             self.set_text()
             i = level
-            while i > 0:
+            while i > 1:
                 self.damage = round(self.damage * 1.2, 1)
                 i -= 1
             self.load_info_label_text()
