@@ -5,26 +5,26 @@ from windows import ShopWindow, ArenaWindow, WorkshopWindow
 
 
 def load_arena():
-    arena_1_monsters = [Monster("enemy_1", 50, 1), Monster("enemy_4", 50, 1), Monster("enemy_2", 50, 1),
-                        Monster("enemy_6", 50, 1), Monster("enemy_30", 50, 1), Monster("enemy_32", 50, 1)]
+    arena_1_monsters = [Monster("enemy_1", 150, 1), Monster("enemy_4", 150, 1), Monster("enemy_2", 150, 1),
+                        Monster("enemy_6", 150, 1), Monster("enemy_30", 150, 1), Monster("enemy_32", 150, 1)]
 
-    arena_2_monsters = [Monster("enemy_10", 150, 2), Monster("enemy_11", 150, 2), Monster("enemy_12", 150, 2),
-                        Monster("enemy_14", 150, 2), Monster("enemy_15", 150, 2), Monster("enemy_5", 150, 2),
-                        Monster("enemy_28", 300, 5, True)]
+    arena_2_monsters = [Monster("enemy_10", 700, 2), Monster("enemy_11", 700, 2), Monster("enemy_12", 700, 2),
+                        Monster("enemy_14", 700, 2), Monster("enemy_15", 700, 2), Monster("enemy_5", 700, 2),
+                        Monster("enemy_28", 1000, 5, True)]
 
-    arena_3_monsters = [Monster("enemy_7", 200, 3), Monster("enemy_26", 200, 3), Monster("enemy_8", 200, 3),
-                        Monster("enemy_22", 200, 3), Monster("enemy_35", 200, 3), Monster("enemy_9", 220, 3)]
+    arena_3_monsters = [Monster("enemy_7", 1300, 3), Monster("enemy_26", 1300, 3), Monster("enemy_8", 1300, 3),
+                        Monster("enemy_22", 1300, 3), Monster("enemy_35", 1300, 3), Monster("enemy_9", 1350, 3)]
 
-    arena_4_monsters = [Monster("enemy_24", 500, 5), Monster("enemy_33", 500, 5), Monster("enemy_13", 500, 5),
-                        Monster("enemy_33", 500, 5), Monster("enemy_37", 500, 5), Monster("enemy_39", 500, 5),
-                        Monster("enemy_3", 1000, 10, True)]
+    arena_4_monsters = [Monster("enemy_24", 2000, 5), Monster("enemy_33", 2000, 5), Monster("enemy_13", 2000, 5),
+                        Monster("enemy_33", 2000, 5), Monster("enemy_37", 2000, 5), Monster("enemy_39", 2500, 5),
+                        Monster("enemy_3", 5000, 10, True)]
 
-    arena_5_monsters = [Monster("enemy_25", 1000, 10), Monster("enemy_23", 1000, 10), Monster("enemy_27", 1000, 10),
-                        Monster("enemy_36", 1000, 10), Monster("enemy_38", 1000, 10), Monster("enemy_34", 1000, 10)]
+    arena_5_monsters = [Monster("enemy_25", 3700, 10), Monster("enemy_23", 3700, 10), Monster("enemy_27", 3700, 10),
+                        Monster("enemy_36", 3700, 10), Monster("enemy_38", 3700, 10), Monster("enemy_34", 3700, 10)]
 
-    arena_6_monsters = [Monster("enemy_16", 3000, 20), Monster("enemy_17", 3000, 20), Monster("enemy_18", 3000, 20),
-                        Monster("enemy_19", 3000, 20), Monster("enemy_20", 3000, 20), Monster("enemy_21", 3000, 20),
-                        Monster("enemy_29", 6000, 40, True)]
+    arena_6_monsters = [Monster("enemy_16", 8000, 20), Monster("enemy_17", 8000, 20), Monster("enemy_18", 8000, 20),
+                        Monster("enemy_19", 8000, 20), Monster("enemy_20", 8000, 20), Monster("enemy_21", 8000, 20),
+                        Monster("enemy_29", 10000, 40, True)]
 
     arena_save_file = open("saves/arena_save.txt", "r")
     arena_data = arena_save_file.readlines()

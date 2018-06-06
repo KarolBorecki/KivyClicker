@@ -75,7 +75,7 @@ class GameManager(FloatLayout):
         self.add_widget(self.player)
 
     def on_kill(self):
-        self.money += self.current_arena.kill_bonus + self.current_monster.kill_bonus
+        self.add_money(self.current_arena.kill_bonus + self.current_monster.kill_bonus)
 
     def open_window(self, menu_option):
         self.attack_sound.stop()

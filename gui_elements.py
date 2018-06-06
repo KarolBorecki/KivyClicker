@@ -113,7 +113,7 @@ class DisappearingLabel(Label):
         self.parent.remove_widget(self)
 
 
-class MoneyLabel(ButtonBehavior, Label):
+class MoneyLabel(Label):
     def __init__(self, round_places=1, **kwargs):
         super(MoneyLabel, self).__init__(**kwargs)
         self.round_places = round_places
