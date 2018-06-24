@@ -39,11 +39,7 @@ class GameManager(FloatLayout):
         Clock.schedule_interval(self.add_per_second, 1.0)
 
     def add_money(self, amount):
-        if self.is_active:
-            label_pos = {"center_x": randint(20, 80) / 100, "center_y": randint(20, 80) / 100}
-            self.add_widget(DisappearingLabel("+" + str(amount) + "$", pos_hint=label_pos, font_size=30, duration=0.5))
         self.money += amount
-        self.game_status()
 
     def add_per_second(self, dt):
         self.add_money(self.per_sec)
@@ -53,7 +49,7 @@ class GameManager(FloatLayout):
             if self.player.weapon.use_left > 0:
                 self.player.attack(self.current_monster)
             else:
-                self.add_widget(DisappearingLabel("Your broke a weapon!", duration=1))
+                self.add_widget(DisappearingLabel("Your broke a weapon!", font_size=self.width/22, duration=1))
             self.attack_sound.play()
             self.add_money(self.per_click)
         super(GameManager, self).on_touch_down(touch)
@@ -104,7 +100,3 @@ class GameManager(FloatLayout):
         self.add_widget(DisappearingLabel(text="You don't have enough money!", duration=1))
         self.failed_buy_sound.play()
         return False
-
-    def game_status(self):
-        print(["Money: " + str(self.money), " Per click: " + str(self.per_click), " Per sec: " + str(self.per_sec),
-               "Current Arena: " + str(self.current_arena.name), "Current Monster: " + str(self.current_monster.name)])

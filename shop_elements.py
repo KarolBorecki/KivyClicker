@@ -1,4 +1,5 @@
 from kivy.uix.button import Button
+from kivy.graphics import Rectangle, Color
 
 
 class Upgrade(Button):
@@ -28,6 +29,9 @@ class Upgrade(Button):
 
     def get_text(self):
         return ""
+
+    def on_add(self, caller=None):
+        pass
 
 
 class Weapon(Upgrade):
@@ -102,18 +106,25 @@ class Weapon(Upgrade):
 class Armor(Upgrade):
     def __init__(self, adds_per_second, name, price, is_bought, **kwargs):
         self.adds_per_second = adds_per_second
-        self.disabled = is_bought
+        self.is_bought = is_bought
 
         super(Armor, self).__init__(name, price, **kwargs)
 
         self.bind(on_press=self.on_click)
 
     def on_click(self, instance):
-        if self.parent.parent.parent.parent.parent.buy(0, self.adds_per_second, self.price):
-            self.disabled = True
+        parent = self.parent.parent.parent.parent.parent
+        if not self.is_bought and parent.buy(0, self.adds_per_second, self.price):
+            self.is_bought = 1
+            self.on_add(self.parent.parent.parent.parent.shop_content)
 
     def get_text(self):
         return str(self.adds_per_second) + "/sec"
+
+    def on_add(self, caller=None):
+        if self.is_bought > 0:
+            print("DELETING" + str(caller))
+            caller.scrolling_area.remove_widget(self)
 
 
 class Mixture(Upgrade):

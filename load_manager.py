@@ -61,7 +61,7 @@ def save_game(game):
 
     armor_save_file = open("saves/armor_save.txt", "w")
     for armor in game.menu_windows[1].content:
-        armor_save_file.write(str(int(armor.disabled)) + "\n")
+        armor_save_file.write(str(int(armor.is_bought)) + "\n")
     armor_save_file.close()
 
     potion_counts_file = open("saves/potion_counts.txt", "w")

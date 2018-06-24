@@ -2,8 +2,8 @@ from shop_elements import Weapon, Armor, Mixture, Costume
 
 weapon_names = ["Wooden sword", "Iron dagger", "Rusty sword", "Iron sword", "Long iron sword",
                 "Golden sword", "Iron hammer", "Heavy iron sword", "Long iron hammer",
-                "Iron chopper", "Silver sword", "Long silver sword", "Iron-heart sword", "golden-heart sword",
-                "stacked silver sword", "grassy-heart sword", "Ruby sword", "Stacked sword", "Obsidian sword"]
+                "Iron chopper", "Silver sword", "Long silver sword", "Iron heart sword", "Golden heart sword",
+                "Stacked silver sword", "Grassy heart sword", "Ruby sword", "Stacked sword", "Obsidian sword"]
 weapon_prices = [1000, 1500, 2000, 4000, 8000, 10000, 20000, 50000, 100000, 150000,
                  300000, 800000, 2000000, 5000000, 10000000, 15000000, 30000000, 50000000, 70000000]
 weapon_damage = [1, 3, 5, 7, 10, 13, 15, 20, 24, 30, 40, 51, 63,

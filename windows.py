@@ -8,9 +8,12 @@ from gui_elements import MoneyLabel
 class ShopContent(ScrollView):
     def __init__(self, elements, **kwargs):
         ScrollView.__init__(self, **kwargs)
+        self.elements = elements
 
-        for element in elements:
+    def load_elements(self):
+        for element in self.elements:
             self.scrolling_area.add_widget(element)
+            element.on_add(self)
 
 
 class PopupWindow(FloatLayout):
@@ -27,7 +30,9 @@ class ShopWindow(PopupWindow):
         self.content = content
         self.header.text = header
 
-        self.window_scheme.add_widget(ShopContent(self.content))
+        self.shop_content = ShopContent(self.content)
+        self.window_scheme.add_widget(self.shop_content)
+        self.shop_content.load_elements()
 
     def reset(self):
         for upgrade in self.content:
