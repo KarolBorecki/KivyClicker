@@ -21,7 +21,6 @@ class Player(FloatLayout):
         self.load_img()
 
     def attack(self, monster):
-        self.parent.add_widget(DisappearingImage("img/effects/dust.gif", {'center_x': .5, 'center_y': .5}, (.6, .6)))
         anim = Animation(angle=-90, duration=0.05) + Animation(angle=0, duration=0.1)
         anim.start(self)
         self.weapon.use_left -= 1
@@ -42,8 +41,6 @@ class Player(FloatLayout):
 
 
 class Monster(Image):
-    death_sound = SoundLoader.load('sounds/monster_death.wav')
-
     def __init__(self, name, health, kill_bonus, is_boss=False, **kwargs):
         super(Monster, self).__init__(**kwargs)
         self.name = name
@@ -63,7 +60,6 @@ class Monster(Image):
             self.dead()
 
     def dead(self):
-        self.death_sound.play()
         self.parent.spawn_monster()
         self.parent.on_kill()
         self.parent.remove_widget(self)

@@ -1,10 +1,16 @@
+import os
+
+from kivy.app import App
+
 from arena import Arena
 from gui_elements import Monster, Player
-from shop_loader import load_weapon, load_mixture, load_armor, load_costumes
+from shop_loader import load_weapon, load_mixture, load_armor, load_costumes, weapon_names, armor_names, mixture_names, \
+    costume_names
 from windows import ShopWindow, ArenaWindow, WorkshopWindow
 
 
 def load_arena():
+    user_data_dir = App.get_running_app().user_data_dir + "/"
     arena_1_monsters = [Monster("enemy_1", 150, 1), Monster("enemy_4", 150, 1), Monster("enemy_2", 150, 1),
                         Monster("enemy_6", 150, 1), Monster("enemy_30", 150, 1), Monster("enemy_32", 150, 1)]
 
@@ -26,7 +32,7 @@ def load_arena():
                         Monster("enemy_19", 8000, 20), Monster("enemy_20", 8000, 20), Monster("enemy_21", 8000, 20),
                         Monster("enemy_29", 10000, 40, True)]
 
-    arena_save_file = open("saves/arena_save.txt", "r")
+    arena_save_file = open(user_data_dir + "arena_save.txt", "r")
     arena_data = arena_save_file.readlines()
     arena_save_file.close()
 
@@ -39,7 +45,9 @@ def load_arena():
 
 
 def save_game(game):
-    save_file = open("saves/game_info_save.txt", "w")
+    user_data_dir = App.get_running_app().user_data_dir + "/"
+
+    save_file = open(user_data_dir + "game_info_save.txt", "w")
 
     save_file.write(str(game.money) + "\n")
     save_file.write(str(game.per_sec) + "\n")
@@ -49,41 +57,48 @@ def save_game(game):
 
     save_file.close()
 
-    weapon_save_file = open("saves/weapon_save.txt", "w")
+    weapon_save_file = open(user_data_dir + "weapon_save.txt", "w")
     for weapon in game.menu_windows[0].content:
         weapon_save_file.write(str(int(weapon.level)) + "\n")
     weapon_save_file.close()
 
-    weapon_use_left_file = open("saves/weapon_use_left.txt", "w")
+    weapon_use_left_file = open(user_data_dir + "weapon_use_left.txt", "w")
     for weapon in game.menu_windows[0].content:
         weapon_use_left_file.write(str(int(weapon.use_left)) + "\n")
     weapon_use_left_file.close()
 
-    armor_save_file = open("saves/armor_save.txt", "w")
+    armor_save_file = open(user_data_dir + "armor_save.txt", "w")
     for armor in game.menu_windows[1].content:
         armor_save_file.write(str(int(armor.is_bought)) + "\n")
     armor_save_file.close()
 
-    potion_counts_file = open("saves/potion_counts.txt", "w")
+    potion_counts_file = open(user_data_dir + "potion_counts.txt", "w")
     for potion in game.menu_windows[2].content:
         potion_counts_file.write(str(potion.count) + "\n")
     potion_counts_file.close()
 
-    arena_save_file = open("saves/arena_save.txt", "w")
+    arena_save_file = open(user_data_dir + "arena_save.txt", "w")
     for a in game.arena:
         arena_save_file.write(str(int(a.is_bought)) + "\n")
     arena_save_file.close()
 
-    costume_save_file = open("saves/costume_saves.txt", "w")
+    costume_save_file = open(user_data_dir + "costume_saves.txt", "w")
     for a in game.menu_windows[3].content:
         costume_save_file.write(str(int(a.is_bought)) + "\n")
     costume_save_file.close()
 
 
 def load_game(game):
-    save_file = open("saves/game_info_save.txt", "r")
+    user_data_dir = App.get_running_app().user_data_dir + "/"
+    if not os.path.isfile(user_data_dir + "game_info_save.txt"):
+        reset()
+
+    save_file = open(user_data_dir + "game_info_save.txt", "r")
     data = save_file.readlines()
+    print data
+    print user_data_dir
     save_file.close()
+
     game.arena = load_arena()
     game.money = float(data[0])
     game.per_sec = float(data[1])
@@ -103,8 +118,9 @@ def load_game(game):
     game.spawn_monster()
 
 
-def reset(game):
-    save_file = open("saves/game_info_save.txt", "w")
+def reset():
+    user_data_dir = App.get_running_app().user_data_dir + "/"
+    save_file = open(user_data_dir + "game_info_save.txt", "a+")
 
     save_file.write(str(0) + "\n")
     save_file.write(str(0) + "\n")
@@ -115,32 +131,39 @@ def reset(game):
     save_file.close()
 
     i = 1
-    weapon_save_file = open("saves/weapon_save.txt", "w")
-    for weapon in game.menu_windows[0].content:
+    weapon_save_file = open(user_data_dir + "weapon_save.txt", "a+")
+    for weapon in weapon_names:
         weapon_save_file.write(str(int(i)) + "\n")
         i = 0
     weapon_save_file.close()
 
-    armor_save_file = open("saves/armor_save.txt", "w")
-    for armor in game.menu_windows[1].content:
+    weapon_save_file = open(user_data_dir + "weapon_use_left.txt", "a+")
+    for weapon in weapon_names:
+        weapon_save_file.write("800" + "\n")
+    weapon_save_file.close()
+
+    i = 0
+    armor_save_file = open(user_data_dir + "armor_save.txt", "a+")
+    for armor in armor_names:
         armor_save_file.write(str(int(i)) + "\n")
     armor_save_file.close()
 
-    potion_counts_file = open("saves/potion_counts.txt", "w")
-    for potion in game.menu_windows[2].content:
+    i = 0
+    potion_counts_file = open(user_data_dir + "potion_counts.txt", "a+")
+    for potion in mixture_names:
         potion_counts_file.write(str(i) + "\n")
     potion_counts_file.close()
 
     i = 1
-    arena_save_file = open("saves/arena_save.txt", "w")
-    for a in game.arena:
+    arena_save_file = open(user_data_dir + "arena_save.txt", "a+")
+    for a in range(6):
         arena_save_file.write(str(int(i)) + "\n")
         i = 0
     arena_save_file.close()
 
     i = 1
-    costume_save_file = open("saves/costume_saves.txt", "w")
-    for a in game.menu_windows[3].content:
+    costume_save_file = open(user_data_dir + "costume_saves.txt", "a+")
+    for a in costume_names:
         costume_save_file.write(str(int(i)) + "\n")
         i = 0
     costume_save_file.close()

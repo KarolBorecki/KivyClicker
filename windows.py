@@ -48,7 +48,6 @@ class ArenaWindow(PopupWindow):
         self.refresh(parent)
 
     def change_arena(self, direction):
-        self.parent.switch_sound.play()
         self.current_arena_number += direction
         self.refresh(self.parent)
 
@@ -62,7 +61,6 @@ class ArenaWindow(PopupWindow):
         self.parent.background.source = self.current_arena.load_background_source()
         self.parent.remove_widget(self.parent.current_monster)
         self.parent.spawn_monster()
-        self.parent.arena_change_sound.play()
         self.parent.open_window(4)
         self.refresh(self.parent)
 

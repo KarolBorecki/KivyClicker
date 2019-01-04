@@ -1,3 +1,5 @@
+from kivy.app import App
+
 from shop_elements import Weapon, Armor, Mixture, Costume
 
 weapon_names = ["Wooden sword", "Iron dagger", "Rusty sword", "Iron sword", "Long iron sword",
@@ -55,7 +57,7 @@ costume_prices = [0, 20000, 1000000, 1000000,
 
 
 def read_counts_from_file(file_name):
-    counts_file = open(file_name, "r")
+    counts_file = open(App.get_running_app().user_data_dir + "/" + file_name, "r")
     counts = []
     for line in counts_file.readlines():
         counts.append(line.strip())
@@ -68,13 +70,15 @@ def load_weapon():
     names = weapon_names
     prices = weapon_prices
     damage = weapon_damage
-    level = read_counts_from_file("saves/weapon_save.txt")
-    use_left = read_counts_from_file("saves/weapon_use_left.txt")
+    level = read_counts_from_file("weapon_save.txt")
+    use_left = read_counts_from_file("weapon_use_left.txt")
 
     weapon = []
     i = 0
     while i < len(names):
-        weapon.append(Weapon(i, int(damage[i]), str(names[i]), float(prices[i]), int(use_left[i]), int(level[i])))
+        weapon.append(Weapon(i, int(damage[i]), str(names[i]), float(prices[i]),
+                             int(use_left[i]),
+                             int(level[i])))
         i += 1
 
     return weapon
@@ -84,7 +88,7 @@ def load_armor():
     names = armor_names
     prices = armor_prices
     per_seconds = armor_per_seconds
-    counts = read_counts_from_file("saves/armor_save.txt")
+    counts = read_counts_from_file("armor_save.txt")
 
     armor = []
     i = 0
@@ -100,7 +104,7 @@ def load_mixture():
     prices = mixture_prices
     damage = mixture_damage
     per_seconds = mixture_per_seconds
-    counts = read_counts_from_file("saves/potion_counts.txt")
+    counts = read_counts_from_file("potion_counts.txt")
 
     mixture = []
     i = 0
@@ -114,7 +118,7 @@ def load_mixture():
 def load_costumes():
     names = costume_names
     prices = costume_prices
-    counts = read_counts_from_file("saves/costume_saves.txt")
+    counts = read_counts_from_file("costume_saves.txt")
 
     costumes = []
 
