@@ -26,6 +26,8 @@ class GameManager(FloatLayout):
 
     is_active = True
 
+    is_info = False
+
     def __init__(self, **kwargs):
         super(GameManager, self).__init__(**kwargs)
         Clock.schedule_interval(self.add_per_second, 1.0)
@@ -37,13 +39,15 @@ class GameManager(FloatLayout):
 
     def add_per_second(self, dt):
         self.add_money(self.per_sec)
+        self.is_info = False
 
     def on_touch_down(self, touch):
         if self.is_active:
             if self.player.weapon.use_left > 0:
                 self.player.attack(self.current_monster)
-            else:
+            elif not self.is_info:
                 self.add_widget(DisappearingLabel("Your broke a weapon!", font_size=self.width/22, duration=1))
+                self.is_info = True
             self.add_money(self.per_click)
         super(GameManager, self).on_touch_down(touch)
 
