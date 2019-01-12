@@ -49,8 +49,6 @@ class Weapon(Upgrade):
         self.check_level(level)
         self.bind(on_press=self.on_click)
 
-        print self.repair_price
-
     def repair(self, game):
         if game.buy(0, 0, self.repair_price):
             self.use_left = 800
@@ -123,7 +121,6 @@ class Armor(Upgrade):
 
     def on_add(self, caller=None):
         if self.is_bought > 0:
-            print("DELETING" + str(caller))
             caller.scrolling_area.remove_widget(self)
 
 

@@ -95,8 +95,6 @@ def load_game(game):
 
     save_file = open(user_data_dir + "game_info_save.txt", "r")
     data = save_file.readlines()
-    print data
-    print user_data_dir
     save_file.close()
 
     game.arena = load_arena()
