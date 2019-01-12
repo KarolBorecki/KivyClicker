@@ -31,13 +31,13 @@ class GameManager(FloatLayout):
         Clock.schedule_interval(self.add_per_second, 1.0)
 
     def add_money(self, amount):
-        self.add_widget(DisappearingLabel("+" + str(amount) + "$", pos_hint={"center_x": random.uniform(0.1, 0.8), "center_y": random.uniform(0.1, 0.8)},
-                                          font_size=60, duration=0.8))
+        if self.is_active:
+            self.add_widget(DisappearingLabel("+" + str(amount) + "$", pos_hint={"center_x": random.uniform(0.1, 0.8), "center_y": random.uniform(0.1, 0.8)},
+                                            font_size=60, duration=0.8))
         self.money += amount
 
     def add_per_second(self, dt):
         self.add_money(self.per_sec)
-        self.is_info = False
 
     def on_touch_down(self, touch):
         if self.is_active:
@@ -69,7 +69,7 @@ class GameManager(FloatLayout):
         self.add_money(self.current_arena.kill_bonus + self.current_monster.kill_bonus)
 
     def open_window(self, menu_option):
-
+        self.is_info = False
         if self.current_menu_window is not None:
             self.remove_widget(self.menu_windows[self.current_menu_window])
         window = self.menu_windows[menu_option]
