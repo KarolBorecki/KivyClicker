@@ -36,12 +36,12 @@ def load_arena():
     arena_data = arena_save_file.readlines()
     arena_save_file.close()
 
-    return [Arena(0, "Arena 1", 0, 5, 20, arena_1_monsters, True),
-            Arena(1, "Arena 2", 10000, 10, 30, arena_2_monsters, bool(int(arena_data[1]))),
-            Arena(2, "Arena 3", 50000, 15, 40, arena_3_monsters, bool(int(arena_data[2]))),
-            Arena(3, "Arena 4", 100000, 25, 60, arena_4_monsters, bool(int(arena_data[3]))),
-            Arena(4, "Arena 5", 500000, 35, 80, arena_5_monsters, bool(int(arena_data[4]))),
-            Arena(5, "Arena 6", 1000000, 45, 100, arena_6_monsters, bool(int(arena_data[5])))]
+    return [Arena(0, "Arena 1", 0, 5, 60, arena_1_monsters, True),
+            Arena(1, "Arena 2", 10000, 20, 140, arena_2_monsters, bool(int(arena_data[1]))),
+            Arena(2, "Arena 3", 50000, 90, 320, arena_3_monsters, bool(int(arena_data[2]))),
+            Arena(3, "Arena 4", 100000, 170, 560, arena_4_monsters, bool(int(arena_data[3]))),
+            Arena(4, "Arena 5", 500000, 300, 1000, arena_5_monsters, bool(int(arena_data[4]))),
+            Arena(5, "Arena 6", 1000000, 560, 2000, arena_6_monsters, bool(int(arena_data[5])))]
 
 
 def save_game(game):
