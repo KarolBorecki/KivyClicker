@@ -1,7 +1,5 @@
-from random import randint
+import random
 
-from kivy.core.audio import SoundLoader
-from kivy.core.window import Window
 from kivy.properties import NumericProperty, ObjectProperty, Clock
 from kivy.uix.floatlayout import FloatLayout
 
@@ -33,8 +31,8 @@ class GameManager(FloatLayout):
         Clock.schedule_interval(self.add_per_second, 1.0)
 
     def add_money(self, amount):
-        self.background.width = 200
-
+        self.add_widget(DisappearingLabel("+" + str(amount) + "$", pos_hint={"center_x": random.uniform(0.1, 0.8), "center_y": random.uniform(0.1, 0.8)},
+                                          font_size=60, duration=0.8))
         self.money += amount
 
     def add_per_second(self, dt):
