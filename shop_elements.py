@@ -49,6 +49,8 @@ class Weapon(Upgrade):
         self.check_level(level)
         self.bind(on_press=self.on_click)
 
+        print self.repair_price
+
     def repair(self, game):
         if game.buy(0, 0, self.repair_price):
             self.use_left = 800
@@ -89,7 +91,7 @@ class Weapon(Upgrade):
         parent.player.change_weapon(self)
     
     def calculate_repair_price(self):
-        return int(self.price * (self.level + 1) / 2)
+        return float((self.price / self.damage))
 
     def calculate_upgrade_price(self):
         return int(self.price * self.level * (self.level + 1))

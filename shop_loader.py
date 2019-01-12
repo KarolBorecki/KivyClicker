@@ -6,7 +6,7 @@ weapon_names = ["Wooden sword", "Iron dagger", "Rusty sword", "Iron sword", "Lon
                 "Golden sword", "Iron hammer", "Heavy iron sword", "Long iron hammer",
                 "Iron chopper", "Silver sword", "Long silver sword", "Iron heart sword", "Golden heart sword",
                 "Stacked silver sword", "Grassy heart sword", "Ruby sword", "Stacked sword", "Obsidian sword"]
-weapon_prices = [1000, 1500, 2000, 4000, 8000, 10000, 20000, 50000, 100000, 150000,
+weapon_prices = [250, 1500, 3500, 5000, 8000, 14000, 20000, 50000, 100000, 150000,
                  300000, 800000, 2000000, 5000000, 10000000, 15000000, 30000000, 50000000, 70000000]
 weapon_damage = [1, 3, 5, 7, 10, 13, 15, 20, 24, 30, 40, 51, 63,
                  70, 80, 90, 97, 100, 107, 115]
